@@ -1,0 +1,487 @@
+{
+    "suggestions": {
+    },
+    "recipes": {
+      "mongodb::default": "Installs latest stable MongoDB from 10gen Ubuntu packages including custom init.d script"
+    },
+    "description": "Installs and configures MongoDB Stable",
+    "conflicting": {
+    },
+    "attributes": {
+      "mongodb/mms": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB mms",
+        "description": "Enable when you have a Mongo monitoring server"
+      },
+      "mongodb/nocursors": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB nocursors",
+        "description": "Diagnostic/debugging option"
+      },
+      "mongodb/config": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/etc/mongo.conf",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB config",
+        "description": "Path to MongoDB config file"
+      },
+      "mongodb/replication/slave/source": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication slave source",
+        "description": "Source for replication"
+      },
+      "mongodb/replication/arbiter": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication arbiter",
+        "description": "Address of arbiter server"
+      },
+      "mongodb/mms/token": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB mms-token",
+        "description": "Accout token for Mongo monitoring server"
+      },
+      "mongodb/replication/slave": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication slave",
+        "description": "In replicated mongo databases, specify here whether this is a slave or master"
+      },
+      "mongodb/nohints": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB nohints",
+        "description": "Ignore query hints"
+      },
+      "mongodb/pidfile": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/data/mongodb/mongodb.lock",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB PID file",
+        "description": "Path to MongoDB PID file"
+      },
+      "mongodb/replication/pairwith": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication pairwith",
+        "description": "Address of a server to pair with"
+      },
+      "mongodb/replication/master": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication master",
+        "description": "In replicated mongo databases, specify here whether this is a slave or master"
+      },
+      "mongodb/replication/slave/only": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication slave only",
+        "description": "Slave only: specify a single database to replicate"
+      },
+      "mongodb/replication/opidmem": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "0",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication opidmem",
+        "description": "Custom size limit for in-memory storage of op ids (in MB)"
+      },
+      "mongodb/nssize": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB nssize",
+        "description": "Specify .ns file size for new databases"
+      },
+      "mongodb/noscripting": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB noscripting",
+        "description": "Turns off server-side scripting. This will result in greatly limited functionality."
+      },
+      "mongodb/objcheck": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB objcheck",
+        "description": "Inspect all client data for validity on receipt (useful for developing drivers)"
+      },
+      "mongodb/logfile": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/var/log/mongodb.log",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB log file",
+        "description": "MongoDB will log into this file"
+      },
+      "mongodb/replication/oplogsize": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "0",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication oplogsize",
+        "description": "Custom size for replication operation log (in MB)"
+      },
+      "mongodb/replication": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication",
+        "description": "Enable if you want to configure replication"
+      },
+      "mongodb/mms/name": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB mms-name",
+        "description": "Server name for Mongo monitoring server"
+      },
+      "mongodb/notablescan": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB notablescan",
+        "description": "Turns off table scans. Any query that would do a table scan fails."
+      },
+      "mongodb/diaglog": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB operations loggins",
+        "description": "Set oplogging level where n is 0=off (default) 1=W 2=R 3=both 7=W+some reads"
+      },
+      "mongodb/noprealloc": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB noprealloc",
+        "description": "Disable data file preallocation"
+      },
+      "mongodb/verbose": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB verbose",
+        "description": "Verbose logging output"
+      },
+      "mongodb/auth": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB authentication",
+        "description": "Turn on/off security"
+      },
+      "mongodb/nohttp": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB nohttp",
+        "description": "Disable the HTTP interface (Defaults to localhost:27018)"
+      },
+      "mongodb/port": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "27017",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB port",
+        "description": "Accept connections on the specified port"
+      },
+      "mongodb/datadir": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/data/mongodb",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB data store",
+        "description": "All MongoDB data will be stored here"
+      },
+      "mongodb/replication/autoresync": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication autoresync",
+        "description": "Automatically resync if slave data is stale"
+      },
+      "mongodb/quota": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB quota",
+        "description": "Enable db quota management"
+      },
+      "mongodb/replication/master/source": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB replication master source",
+        "description": "Source for replication"
+      },
+      "mongodb/mms/interval": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB mms-interval",
+        "description": "Ping interval for Mongo monitoring server"
+      },
+      "mongodb/log_cpu_io": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB CPU & I/O logging",
+        "description": "Enables periodic logging of CPU utilization and I/O wait"
+      }
+    },
+    "providing": {
+    },
+    "dependencies": {
+    },
+    "maintainer": "Paper Cavalier",
+    "replacing": {
+    },
+    "platforms": {
+      "ubuntu": [
+
+      ]
+    },
+    "maintainer_email": "code@papercavalier.com",
+    "name": "mongodb",
+    "version": "0.1.0",
+    "groupings": {
+    },
+    "license": "Apache 2.0",
+    "long_description": "",
+    "recommendations": {
+    }
+  }
