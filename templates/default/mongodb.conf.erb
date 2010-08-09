@@ -21,6 +21,8 @@ cpu = true
 <% if @node[:mongodb][:auth] %>
 # Turn on/off security.  Off is currently the default
 auth = true
+<% else %>
+noauth = true
 <% end %>
 
 <% if @node[:mongodb][:verbose] %>
