@@ -1,3 +1,9 @@
+default[:mongodb][:version]           = "1.6.0"
+default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
+default[:mongodb][:i686][:checksum]   = "5b60e74fb7c6855c20a7e8b6db6d95ab"
+default[:mongodb][:x86_64][:checksum] = "f84749567012e0bd814be27bca8d39f7"
+
+default[:mongodb][:dir]       = "/opt/mongodb-#{mongodb[:version]}"
 default[:mongodb][:datadir]   = "/data/mongodb"
 default[:mongodb][:config]    = "/etc/mongodb.conf"
 default[:mongodb][:logfile]   = "/var/log/mongodb.log"

@@ -2,7 +2,7 @@
     "suggestions": {
     },
     "recipes": {
-      "mongodb::default": "Installs latest stable MongoDB from 10gen Ubuntu packages including custom init.d script"
+      "mongodb::source": "Installs MongoDB from source and includes init.d script"
     },
     "description": "Installs and configures MongoDB Stable",
     "conflicting": {
@@ -123,13 +123,27 @@
         "choice": [
 
         ],
-        "default": "/data/mongodb/mongodb.lock",
+        "default": "/var/run/mongodb.pid",
         "type": "string",
         "recipes": [
 
         ],
         "display_name": "MongoDB PID file",
         "description": "Path to MongoDB PID file"
+      },
+      "mongodb/i686/checksum": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "5b60e74fb7c6855c20a7e8b6db6d95ab",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB 32bit source file checksum",
+        "description": "Will make sure the source file is the real deal"
       },
       "mongodb/replication/pairwith": {
         "required": "optional",
@@ -170,6 +184,19 @@
         ],
         "display_name": "MongoDB replication slave only",
         "description": "Slave only: specify a single database to replicate"
+      },
+      "mongodb/source": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB source file",
+        "description": "Downloaded location for MongoDB"
       },
       "mongodb/replication/opidmem": {
         "required": "optional",
@@ -240,6 +267,34 @@
         ],
         "display_name": "MongoDB log file",
         "description": "MongoDB will log into this file"
+      },
+      "mongodb/dir": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/opt/mongodb-1.6.0",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB installation path",
+        "description": "MongoDB will be installed here"
+      },
+      "mongodb/x86_64/checksum": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "f84749567012e0bd814be27bca8d39f7",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB 64bit source file checksum",
+        "description": "Will make sure the source file is the real deal"
       },
       "mongodb/replication/oplogsize": {
         "required": "optional",
@@ -351,6 +406,20 @@
         ],
         "display_name": "MongoDB authentication",
         "description": "Turn on/off security"
+      },
+      "mongodb/version": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "1.6.0",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB version",
+        "description": "Which MongoDB version will be installed"
       },
       "mongodb/nohttp": {
         "required": "optional",
@@ -466,18 +535,24 @@
     "providing": {
     },
     "dependencies": {
+      "build-essential": [
+
+      ]
     },
     "maintainer": "Paper Cavalier",
     "replacing": {
     },
     "platforms": {
+      "debian": [
+
+      ],
       "ubuntu": [
 
       ]
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "mongodb",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "groupings": {
     },
     "license": "Apache 2.0",

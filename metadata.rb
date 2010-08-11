@@ -2,15 +2,44 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB Stable"
-version           "0.1.0"
+version           "0.1.1"
 
-recipe "mongodb::default", "Installs latest stable MongoDB from 10gen Ubuntu packages including custom init.d script"
+recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 
-supports "ubuntu"
+%w{ ubuntu debian }.each do |os|
+  supports os
+end
+
+depends "build-essential"
+
+# Package info
+attribute "mongodb/version",
+  :display_name => "MongoDB version",
+  :description => "Which MongoDB version will be installed",
+  :default => "1.6.0"
+
+attribute "mongodb/source",
+  :display_name => "MongoDB source file",
+  :description => "Downloaded location for MongoDB"
+
+attribute "mongodb/i686/checksum",
+  :display_name => "MongoDB 32bit source file checksum",
+  :description => "Will make sure the source file is the real deal",
+  :default => "5b60e74fb7c6855c20a7e8b6db6d95ab"
+
+attribute "mongodb/x86_64/checksum",
+  :display_name => "MongoDB 64bit source file checksum",
+  :description => "Will make sure the source file is the real deal",
+  :default => "f84749567012e0bd814be27bca8d39f7"
 
 
 
 # Paths & port
+attribute "mongodb/dir",
+  :display_name => "MongoDB installation path",
+  :description => "MongoDB will be installed here",
+  :default => "/opt/mongodb-1.6.0"
+  
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
   :description => "All MongoDB data will be stored here",
@@ -29,7 +58,7 @@ attribute "mongodb/logfile",
 attribute "mongodb/pidfile",
   :display_name => "MongoDB PID file",
   :description => "Path to MongoDB PID file",
-  :default => "/data/mongodb/mongodb.lock"
+  :default => "/var/run/mongodb.pid"
 
 attribute "mongodb/port",
   :display_name => "MongoDB port",
