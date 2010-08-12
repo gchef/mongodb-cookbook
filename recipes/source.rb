@@ -48,12 +48,15 @@ bash "set_up_mongodb" do
   cwd "/tmp"
   code <<-EOH
     tar -zxf mongodb-#{node[:mongodb][:version]}.tar.gz --strip-components=2 -C #{node[:mongodb][:dir]}/bin
-    if [ `grep -c #{node[:mongodb][:dir]} /etc/environment` -eq 0 ]; then
-      sed -i -e 's/PATH="/PATH="#{node[:mongodb][:dir].gsub('/', '\/')}\/bin:/g' /etc/environment
-      source /etc/environment
-    fi
   EOH
 end
+
+environment = File.read('/etc/environment')
+unless environment.include? node[:mongodb][:dir]
+  File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
+end
+# execute "source /etc/environment"
+
 
 file node[:mongodb][:logfile] do
   owner "mongodb"
