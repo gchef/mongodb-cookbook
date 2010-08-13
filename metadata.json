@@ -2,12 +2,55 @@
     "suggestions": {
     },
     "recipes": {
+      "mongodb::backup": "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup",
       "mongodb::source": "Installs MongoDB from source and includes init.d script"
     },
-    "description": "Installs and configures MongoDB Stable",
+    "description": "Installs and configures MongoDB 1.6.0",
     "conflicting": {
     },
     "attributes": {
+      "mongodb/backup/maxemailsize": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "4000",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup max email size",
+        "description": "Set the maximum allowed email size in k. (4000 = approx 5MB email)"
+      },
+      "mongodb/backup/mailcontent": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "stdout",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup mailcontent",
+        "description": "What would you like to be mailed to you?\n    - log   : send only log file\n    - files : send log file and sql files as attachments (see docs)\n    - stdout : will simply output the log to the screen if run manually\n    - quiet : Only send logs if an error occurs"
+      },
+      "mongodb/backup/compression": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "bzip2",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup compression",
+        "description": "Choose Compression type. (gzip or bzip2)"
+      },
       "mongodb/mms": {
         "required": "optional",
         "calculated": false,
@@ -63,6 +106,34 @@
         "display_name": "MongoDB replication slave source",
         "description": "Source for replication"
       },
+      "mongodb/backup/mailaddress": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup mail",
+        "description": "Email Address to send mail to after each backup"
+      },
+      "mongodb/backup/cleanup": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "yes",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup cleanup",
+        "description": "Choose if the uncompressed folder should be deleted after compression has completed"
+      },
       "mongodb/replication/arbiter": {
         "required": "optional",
         "calculated": false,
@@ -88,6 +159,19 @@
         ],
         "display_name": "MongoDB mms-token",
         "description": "Accout token for Mongo monitoring server"
+      },
+      "mongodb/password": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB password",
+        "description": "If authentication is on, you might want to specify this for the db backups"
       },
       "mongodb/replication/slave": {
         "required": "optional",
@@ -197,6 +281,20 @@
         ],
         "display_name": "MongoDB source file",
         "description": "Downloaded location for MongoDB"
+      },
+      "mongodb/backup/day": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "6",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup day",
+        "description": "Which day do you want weekly backups? (1 to 7 where 1 is Monday)"
       },
       "mongodb/replication/opidmem": {
         "required": "optional",
@@ -365,6 +463,20 @@
         "display_name": "MongoDB operations loggins",
         "description": "Set oplogging level where n is 0=off (default) 1=W 2=R 3=both 7=W+some reads"
       },
+      "mongodb/backup/backupdir": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/var/backups/mongodb",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup directory",
+        "description": "Backup directory location"
+      },
       "mongodb/noprealloc": {
         "required": "optional",
         "calculated": false,
@@ -435,6 +547,19 @@
         "display_name": "MongoDB nohttp",
         "description": "Disable the HTTP interface (Defaults to localhost:27018)"
       },
+      "mongodb/username": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB useranme",
+        "description": "If authentication is on, you might want to specify this for the db backups"
+      },
       "mongodb/port": {
         "required": "optional",
         "calculated": false,
@@ -455,7 +580,7 @@
         "choice": [
 
         ],
-        "default": "/data/mongodb",
+        "default": "/var/db/mongodb",
         "type": "string",
         "recipes": [
 
@@ -490,6 +615,20 @@
         ],
         "display_name": "MongoDB quota",
         "description": "Enable db quota management"
+      },
+      "mongodb/backup/latest": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "yes",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB backup latest",
+        "description": "Additionally keep a copy of the most recent backup in a seperate directory"
       },
       "mongodb/replication/master/source": {
         "required": "optional",
@@ -552,7 +691,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "mongodb",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "groupings": {
     },
     "license": "Apache 2.0",

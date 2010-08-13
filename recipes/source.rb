@@ -44,11 +44,12 @@ end
   end
 end
 
-bash "set_up_mongodb" do
+bash "Setting up MongoDB #{node[:mongodb][:version]}" do
   cwd "/tmp"
   code <<-EOH
     tar -zxf mongodb-#{node[:mongodb][:version]}.tar.gz --strip-components=2 -C #{node[:mongodb][:dir]}/bin
   EOH
+  not_if { `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version] }
 end
 
 environment = File.read('/etc/environment')
@@ -66,7 +67,7 @@ file node[:mongodb][:logfile] do
   backup false
 end
 
-template "/etc/mongodb.conf" do
+template node[:mongodb][:config] do
   source "mongodb.conf.erb"
   owner "mongodb"
   group "mongodb"
@@ -74,8 +75,7 @@ template "/etc/mongodb.conf" do
   backup false
 end
 
-template "mongodb.init" do
-  path "/etc/init.d/mongodb"
+template "/etc/init.d/mongodb" do
   source "mongodb.init.erb"
   mode 0755
   backup false
@@ -84,4 +84,5 @@ end
 service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
+  subscribes :restart, resources(:template => node[:mongodb][:config]), :immediately
 end

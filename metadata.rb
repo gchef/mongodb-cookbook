@@ -1,10 +1,11 @@
 maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
-description       "Installs and configures MongoDB Stable"
-version           "0.1.1"
+description       "Installs and configures MongoDB 1.6.0"
+version           "0.1.2"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
+recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
 
 %w{ ubuntu debian }.each do |os|
   supports os
@@ -43,7 +44,7 @@ attribute "mongodb/dir",
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
   :description => "All MongoDB data will be stored here",
-  :default => "/data/mongodb"
+  :default => "/var/db/mongodb"
 
 attribute "mongodb/config",
   :display_name => "MongoDB config",
@@ -77,6 +78,14 @@ attribute "mongodb/auth",
   :display_name => "MongoDB authentication",
   :description => "Turn on/off security",
   :default => "false"
+
+attribute "mongodb/username",
+  :display_name => "MongoDB useranme",
+  :description => "If authentication is on, you might want to specify this for the db backups"
+
+attribute "mongodb/password",
+  :display_name => "MongoDB password",
+  :description => "If authentication is on, you might want to specify this for the db backups"
 
 attribute "mongodb/verbose",
   :display_name => "MongoDB verbose",
@@ -205,3 +214,52 @@ attribute "mongodb/replication/opidmem",
   :display_name => "MongoDB replication opidmem",
   :description => "Custom size limit for in-memory storage of op ids (in MB)",
   :default => "0"
+
+
+
+# Backups
+attribute "mongodb/backup/backupdir",
+  :display_name => "MongoDB backup directory",
+  :description => "Backup directory location",
+  :default => "/var/backups/mongodb"
+
+attribute "mongodb/backup/day",
+  :display_name => "MongoDB backup day",
+  :description => "Which day do you want weekly backups? (1 to 7 where 1 is Monday)",
+  :default => "6"
+
+attribute "mongodb/backup/compression",
+  :display_name => "MongoDB backup compression",
+  :description => "Choose Compression type. (gzip or bzip2)",
+  :default => "bzip2"
+
+attribute "mongodb/backup/cleanup",
+  :display_name => "MongoDB backup cleanup",
+  :description => "Choose if the uncompressed folder should be deleted after compression has completed",
+  :default => "yes"
+
+attribute "mongodb/backup/latest",
+  :display_name => "MongoDB backup latest",
+  :description => "Additionally keep a copy of the most recent backup in a seperate directory",
+  :default => "yes"
+
+attribute "mongodb/backup/mailaddress",
+  :display_name => "MongoDB backup mail",
+  :description => "Email Address to send mail to after each backup",
+  :default => "false"
+
+attribute "mongodb/backup/mailcontent",
+  :display_name => "MongoDB backup mailcontent",
+  :description => %{
+    What would you like to be mailed to you?
+    - log   : send only log file
+    - files : send log file and sql files as attachments (see docs)
+    - stdout : will simply output the log to the screen if run manually
+    - quiet : Only send logs if an error occurs
+  }.strip,
+  :default => "stdout"
+
+attribute "mongodb/backup/maxemailsize",
+  :display_name => "MongoDB backup max email size",
+  :description => "Set the maximum allowed email size in k. (4000 = approx 5MB email)",
+  :default => "4000"
