@@ -56,8 +56,6 @@ environment = File.read('/etc/environment')
 unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
-# execute "source /etc/environment"
-
 
 file node[:mongodb][:logfile] do
   owner "mongodb"
@@ -84,5 +82,5 @@ end
 service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
-  subscribes :restart, resources(:template => node[:mongodb][:config]), :immediately
+  subscribes :restart, resources(:template => node[:mongodb][:config])
 end

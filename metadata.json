@@ -5,7 +5,7 @@
       "mongodb::backup": "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup",
       "mongodb::source": "Installs MongoDB from source and includes init.d script"
     },
-    "description": "Installs and configures MongoDB 1.6.0",
+    "description": "Installs and configures MongoDB 1.6.2",
     "conflicting": {
     },
     "attributes": {
@@ -221,7 +221,7 @@
         "choice": [
 
         ],
-        "default": "5b60e74fb7c6855c20a7e8b6db6d95ab",
+        "default": "3ce4485494806648404e1ee96c223ec6",
         "type": "string",
         "recipes": [
 
@@ -372,7 +372,7 @@
         "choice": [
 
         ],
-        "default": "/opt/mongodb-1.6.0",
+        "default": "/opt/mongodb-1.6.2",
         "type": "string",
         "recipes": [
 
@@ -386,7 +386,7 @@
         "choice": [
 
         ],
-        "default": "f84749567012e0bd814be27bca8d39f7",
+        "default": "73df4aa4be049d733666cebf8f123b55",
         "type": "string",
         "recipes": [
 
@@ -525,7 +525,7 @@
         "choice": [
 
         ],
-        "default": "1.6.0",
+        "default": "1.6.2",
         "type": "string",
         "recipes": [
 
@@ -691,7 +691,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "mongodb",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "groupings": {
     },
     "license": "Apache 2.0",

@@ -1,8 +1,8 @@
 maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
-description       "Installs and configures MongoDB 1.6.0"
-version           "0.1.2"
+description       "Installs and configures MongoDB 1.6.2"
+version           "0.2.0"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
@@ -17,7 +17,7 @@ depends "build-essential"
 attribute "mongodb/version",
   :display_name => "MongoDB version",
   :description => "Which MongoDB version will be installed",
-  :default => "1.6.0"
+  :default => "1.6.2"
 
 attribute "mongodb/source",
   :display_name => "MongoDB source file",
@@ -26,12 +26,12 @@ attribute "mongodb/source",
 attribute "mongodb/i686/checksum",
   :display_name => "MongoDB 32bit source file checksum",
   :description => "Will make sure the source file is the real deal",
-  :default => "5b60e74fb7c6855c20a7e8b6db6d95ab"
+  :default => "3ce4485494806648404e1ee96c223ec6"
 
 attribute "mongodb/x86_64/checksum",
   :display_name => "MongoDB 64bit source file checksum",
   :description => "Will make sure the source file is the real deal",
-  :default => "f84749567012e0bd814be27bca8d39f7"
+  :default => "73df4aa4be049d733666cebf8f123b55"
 
 
 
@@ -39,7 +39,7 @@ attribute "mongodb/x86_64/checksum",
 attribute "mongodb/dir",
   :display_name => "MongoDB installation path",
   :description => "MongoDB will be installed here",
-  :default => "/opt/mongodb-1.6.0"
+  :default => "/opt/mongodb-1.6.2"
   
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
