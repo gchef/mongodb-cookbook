@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB 1.6.2"
-version           "0.2.0"
+version           "0.2.1"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
@@ -40,7 +40,7 @@ attribute "mongodb/dir",
   :display_name => "MongoDB installation path",
   :description => "MongoDB will be installed here",
   :default => "/opt/mongodb-1.6.2"
-  
+
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
   :description => "All MongoDB data will be stored here",
@@ -120,6 +120,11 @@ attribute "mongodb/nohints",
 attribute "mongodb/nohttp",
   :display_name => "MongoDB nohttp",
   :description => "Disable the HTTP interface (Defaults to localhost:27018)",
+  :default => "false"
+
+attribute "mongodb/rest",
+  :display_name => "MongoDB REST",
+  :description => "Enables REST interface for extra info on Http Interface",
   :default => "false"
 
 attribute "mongodb/noscripting",

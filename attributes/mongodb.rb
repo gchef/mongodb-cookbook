@@ -11,7 +11,6 @@ default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"
 default[:mongodb][:host]        = "localhost"
 default[:mongodb][:port]        = 27017
 
-
 default[:mongodb][:log_cpu_io]  = false
 default[:mongodb][:auth]        = false
 default[:mongodb][:username]    = ""
@@ -23,6 +22,7 @@ default[:mongodb][:diaglog]     = false
 default[:mongodb][:nocursors]   = false
 default[:mongodb][:nohints]     = false
 default[:mongodb][:nohttp]      = false
+default[:mongodb][:rest]        = false
 default[:mongodb][:noscripting] = false
 default[:mongodb][:notablescan] = false
 default[:mongodb][:noprealloc]  = false

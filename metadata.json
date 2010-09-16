@@ -533,6 +533,20 @@
         "display_name": "MongoDB version",
         "description": "Which MongoDB version will be installed"
       },
+      "mongodb/rest": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "false",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB REST",
+        "description": "Enables REST interface for extra info on Http Interface"
+      },
       "mongodb/nohttp": {
         "required": "optional",
         "calculated": false,
@@ -691,7 +705,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "mongodb",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "groupings": {
     },
     "license": "Apache 2.0",

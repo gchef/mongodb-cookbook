@@ -83,4 +83,5 @@ service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:config])
+  subscribes :restart, resources(:template => "/etc/init.d/mongodb")
 end
