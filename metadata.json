@@ -65,6 +65,20 @@
         "display_name": "MongoDB mms",
         "description": "Enable when you have a Mongo monitoring server"
       },
+      "mongodb/syncdelay": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "60",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "MongoDB syncdelay",
+        "description": "Controls how often changes are flushed to disk"
+      },
       "mongodb/nocursors": {
         "required": "optional",
         "calculated": false,
@@ -705,7 +719,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "mongodb",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "groupings": {
     },
     "license": "Apache 2.0",

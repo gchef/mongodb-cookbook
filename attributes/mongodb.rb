@@ -22,11 +22,13 @@ default[:mongodb][:diaglog]     = false
 default[:mongodb][:nocursors]   = false
 default[:mongodb][:nohints]     = false
 default[:mongodb][:nohttp]      = false
-default[:mongodb][:rest]        = false
 default[:mongodb][:noscripting] = false
 default[:mongodb][:notablescan] = false
 default[:mongodb][:noprealloc]  = false
 default[:mongodb][:nssize]      = false
+
+default[:mongodb][:rest]        = false
+default[:mongodb][:syncdelay]   = 60
 
 default[:mongodb][:mms] = false
 if mongodb[:mms]

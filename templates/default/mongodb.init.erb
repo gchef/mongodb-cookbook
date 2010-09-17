@@ -57,6 +57,7 @@ NAME=mongodb
 CONF=<%= @node[:mongodb][:config] %>
 REST=<%= @node[:mongodb][:rest] %>
 PIDFILE=<%= @node[:mongodb][:pidfile] %>
+SYNCDELAY="--syncdelay <%= @node[:mongodb][:syncdelay] %>"
 
 # Include mongodb defaults if available
 if [ -f /etc/default/$NAME ] ; then
@@ -112,7 +113,7 @@ running() {
 
 start_server() {
 # Start the process using the wrapper
-  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST --config $CONF
+  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $SYNCDELAY --config $CONF
   errcode=$?
   return $errcode
 }

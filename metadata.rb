@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB 1.6.2"
-version           "0.2.1"
+version           "0.2.2"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
@@ -122,11 +122,6 @@ attribute "mongodb/nohttp",
   :description => "Disable the HTTP interface (Defaults to localhost:27018)",
   :default => "false"
 
-attribute "mongodb/rest",
-  :display_name => "MongoDB REST",
-  :description => "Enables REST interface for extra info on Http Interface",
-  :default => "false"
-
 attribute "mongodb/noscripting",
   :display_name => "MongoDB noscripting",
   :description => "Turns off server-side scripting. This will result in greatly limited functionality.",
@@ -146,6 +141,19 @@ attribute "mongodb/nssize",
   :display_name => "MongoDB nssize",
   :description => "Specify .ns file size for new databases",
   :default => "false"
+
+
+
+# Daemon options
+attribute "mongodb/rest",
+  :display_name => "MongoDB REST",
+  :description => "Enables REST interface for extra info on Http Interface",
+  :default => "false"
+
+attribute "mongodb/syncdelay",
+  :display_name => "MongoDB syncdelay",
+  :description => "Controls how often changes are flushed to disk",
+  :default => "60"
 
 
 
