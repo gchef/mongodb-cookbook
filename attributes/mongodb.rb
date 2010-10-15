@@ -1,8 +1,10 @@
+### PACKAGES
 default[:mongodb][:version]           = "1.6.2"
 default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
 default[:mongodb][:i686][:checksum]   = "3ce4485494806648404e1ee96c223ec6"
 default[:mongodb][:x86_64][:checksum] = "73df4aa4be049d733666cebf8f123b55"
 
+### GENERAL
 default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}"
 default[:mongodb][:datadir]     = "/var/db/mongodb"
 default[:mongodb][:config]      = "/etc/mongodb.conf"
@@ -11,6 +13,9 @@ default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"
 default[:mongodb][:host]        = "localhost"
 default[:mongodb][:port]        = 27017
 
+
+
+### EXTRA
 default[:mongodb][:log_cpu_io]  = false
 default[:mongodb][:auth]        = false
 default[:mongodb][:username]    = ""
@@ -27,32 +32,41 @@ default[:mongodb][:notablescan] = false
 default[:mongodb][:noprealloc]  = false
 default[:mongodb][:nssize]      = false
 
+
+
+### STARTUP
 default[:mongodb][:rest]        = false
 default[:mongodb][:syncdelay]   = 60
 
-default[:mongodb][:mms] = false
-if mongodb[:mms]
-  default[:mongodb][:mms][:token]   = ""
-  default[:mongodb][:mms][:name]    = ""
-  default[:mongodb][:mms][:interval]= ""
-end
 
-default[:mongodb][:replication] = false
-if mongodb[:replication]
-  default[:mongodb][:replication][:slave]           = false
-  default[:mongodb][:replication][:slave][:source]  = ""
-  default[:mongodb][:replication][:slave][:only]    = ""
 
-  default[:mongodb][:replication][:master]          = false
-  default[:mongodb][:replication][:master][:source] = ""
+### MMS
+default[:mongodb][:mms]         = false
+default[:mongodb][:token]     = ""
+default[:mongodb][:name]      = ""
+default[:mongodb][:interval]  = ""
 
-  default[:mongodb][:replication][:pairwith]        = ""
-  default[:mongodb][:replication][:arbiter]         = ""
-  default[:mongodb][:replication][:autoresync]      = false
-  default[:mongodb][:replication][:oplogsize]       = 0
-  default[:mongodb][:replication][:opidmem]         = 0
-end
 
+
+### REPLICATION
+default[:mongodb][:replication]     = false
+default[:mongodb][:slave]         = false
+default[:mongodb][:slave_source]  = ""
+default[:mongodb][:slave_only]    = ""
+
+default[:mongodb][:master]        = false
+default[:mongodb][:master_source] = ""
+
+default[:mongodb][:pairwith]      = ""
+default[:mongodb][:arbiter]       = ""
+
+default[:mongodb][:autoresync]    = false
+default[:mongodb][:oplogsize]     = 0
+default[:mongodb][:opidmem]       = 0
+
+
+
+### BACKUP
 default[:mongodb][:backup][:backupdir]    = "/var/backups/mongodb"
 default[:mongodb][:backup][:day]          = 6
 default[:mongodb][:backup][:compression]  = "bzip2"

@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB 1.6.2"
-version           "0.2.2"
+version           "0.2.3"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
@@ -163,15 +163,15 @@ attribute "mongodb/mms",
   :description => "Enable when you have a Mongo monitoring server",
   :default => "false"
 
-attribute "mongodb/mms/token",
+attribute "mongodb/token",
   :display_name => "MongoDB mms-token",
   :description => "Accout token for Mongo monitoring server"
 
-attribute "mongodb/mms/name",
+attribute "mongodb/name",
   :display_name => "MongoDB mms-name",
   :description => "Server name for Mongo monitoring server"
 
-attribute "mongodb/mms/interval",
+attribute "mongodb/interval",
   :display_name => "MongoDB mms-interval",
   :description => "Ping interval for Mongo monitoring server"
 
@@ -183,47 +183,47 @@ attribute "mongodb/replication",
   :description => "Enable if you want to configure replication",
   :default => "false"
 
-attribute "mongodb/replication/slave",
+attribute "mongodb/slave",
   :display_name => "MongoDB replication slave",
   :description => "In replicated mongo databases, specify here whether this is a slave or master",
   :default => "false"
 
-attribute "mongodb/replication/slave/source",
+attribute "mongodb/slave_source",
   :display_name => "MongoDB replication slave source",
   :description => "Source for replication"
 
-attribute "mongodb/replication/slave/only",
+attribute "mongodb/slave_only",
   :display_name => "MongoDB replication slave only",
   :description => "Slave only: specify a single database to replicate"
 
-attribute "mongodb/replication/master",
+attribute "mongodb/master",
   :display_name => "MongoDB replication master",
   :description => "In replicated mongo databases, specify here whether this is a slave or master",
   :default => "false"
 
-attribute "mongodb/replication/master/source",
+attribute "mongodb/master_source",
   :display_name => "MongoDB replication master source",
   :description => "Source for replication"
 
-attribute "mongodb/replication/pairwith",
+attribute "mongodb/pairwith",
   :display_name => "MongoDB replication pairwith",
   :description => "Address of a server to pair with"
 
-attribute "mongodb/replication/arbiter",
+attribute "mongodb/arbiter",
   :display_name => "MongoDB replication arbiter",
   :description => "Address of arbiter server"
 
-attribute "mongodb/replication/autoresync",
+attribute "mongodb/autoresync",
   :display_name => "MongoDB replication autoresync",
   :description => "Automatically resync if slave data is stale",
   :default => "false"
 
-attribute "mongodb/replication/oplogsize",
+attribute "mongodb/oplogsize",
   :display_name => "MongoDB replication oplogsize",
   :description => "Custom size for replication operation log (in MB)",
   :default => "0"
 
-attribute "mongodb/replication/opidmem",
+attribute "mongodb/opidmem",
   :display_name => "MongoDB replication opidmem",
   :description => "Custom size limit for in-memory storage of op ids (in MB)",
   :default => "0"
