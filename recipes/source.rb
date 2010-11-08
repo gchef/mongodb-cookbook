@@ -33,6 +33,7 @@ remote_file "/tmp/mongodb-#{node[:mongodb][:version]}.tar.gz" do
   source node[:mongodb][:source]
   checksum node[:mongodb][platform][:checksum]
   action :create_if_missing
+  not_if { `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version] }
 end
 
 [node[:mongodb][:dir], "#{node[:mongodb][:dir]}/bin", node[:mongodb][:datadir]].each do |dir|

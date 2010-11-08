@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB 1.6.2"
-version           "0.2.3"
+version           "0.2.4"
 
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
