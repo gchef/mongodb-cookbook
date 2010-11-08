@@ -29,11 +29,19 @@ user "mongodb" do
   shell "/bin/false"
 end
 
-remote_file "/tmp/mongodb-#{node[:mongodb][:version]}.tar.gz" do
-  source node[:mongodb][:source]
-  checksum node[:mongodb][platform][:checksum]
-  action :create_if_missing
-  not_if { `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version] }
+unless `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version]
+  remote_file "/tmp/mongodb-#{node[:mongodb][:version]}.tar.gz" do
+    source node[:mongodb][:source]
+    checksum node[:mongodb][platform][:checksum]
+    action :create_if_missing
+  end
+
+  bash "Setting up MongoDB #{node[:mongodb][:version]}" do
+    cwd "/tmp"
+    code <<-EOH
+      tar -zxf mongodb-#{node[:mongodb][:version]}.tar.gz --strip-components=2 -C #{node[:mongodb][:dir]}/bin
+    EOH
+  end
 end
 
 [node[:mongodb][:dir], "#{node[:mongodb][:dir]}/bin", node[:mongodb][:datadir]].each do |dir|
@@ -43,14 +51,6 @@ end
     mode 0755
     recursive true
   end
-end
-
-bash "Setting up MongoDB #{node[:mongodb][:version]}" do
-  cwd "/tmp"
-  code <<-EOH
-    tar -zxf mongodb-#{node[:mongodb][:version]}.tar.gz --strip-components=2 -C #{node[:mongodb][:dir]}/bin
-  EOH
-  not_if { `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version] }
 end
 
 environment = File.read('/etc/environment')
