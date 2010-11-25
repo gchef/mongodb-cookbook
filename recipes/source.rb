@@ -39,14 +39,17 @@ end
 end
 
 unless `ps -A -o command | grep "[m]ongo"`.include? node[:mongodb][:version]
-  remote_file "/tmp/mongodb-#{node[:mongodb][:version]}.tar.gz" do
+  # ensuring we have this directory
+  directory "/opt/src"
+
+  remote_file "/opt/src/mongodb-#{node[:mongodb][:version]}.tar.gz" do
     source node[:mongodb][:source]
     checksum node[:mongodb][platform][:checksum]
     action :create_if_missing
   end
 
   bash "Setting up MongoDB #{node[:mongodb][:version]}" do
-    cwd "/tmp"
+    cwd "/opt/src"
     code <<-EOH
       tar -zxf mongodb-#{node[:mongodb][:version]}.tar.gz --strip-components=2 -C #{node[:mongodb][:dir]}/bin
     EOH

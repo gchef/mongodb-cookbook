@@ -1,8 +1,8 @@
 ### PACKAGES
-default[:mongodb][:version]           = "1.6.2"
+default[:mongodb][:version]           = "1.6.4"
 default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
-default[:mongodb][:i686][:checksum]   = "3ce4485494806648404e1ee96c223ec6"
-default[:mongodb][:x86_64][:checksum] = "73df4aa4be049d733666cebf8f123b55"
+default[:mongodb][:i686][:checksum]   = "e64d9f4ce31d789caef7370b863cf59d"
+default[:mongodb][:x86_64][:checksum] = "14f89864f3b58fc20f22ec0068325870"
 
 ### GENERAL
 default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}"
