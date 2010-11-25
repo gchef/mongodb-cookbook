@@ -86,3 +86,11 @@ service "mongodb" do
   subscribes :restart, resources(:template => node[:mongodb][:config])
   subscribes :restart, resources(:template => "/etc/init.d/mongodb")
 end
+
+cookbook_file "/etc/logrotate.d/mongodb" do
+  source "logrotate"
+  cookbook "mongodb"
+  owner "mongodb"
+  group "mongodb"
+  mode "0644"
+end

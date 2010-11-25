@@ -1,0 +1,12 @@
+/var/log/mongodb.log {
+  daily
+  missingok
+  notifempty
+  copytruncate
+  rotate 7
+  compress
+  compresscmd /bin/bzip2
+  uncompresscmd /bin/bunzip2
+  compressext .bz2
+  dateext
+}
