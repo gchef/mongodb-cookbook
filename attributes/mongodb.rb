@@ -64,6 +64,8 @@ default[:mongodb][:autoresync]    = false
 default[:mongodb][:oplogsize]     = 0
 default[:mongodb][:opidmem]       = 0
 
+default[:mongodb][:replica_set]   = ""
+
 
 
 ### BACKUP

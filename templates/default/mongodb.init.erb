@@ -56,6 +56,7 @@ DESC=database
 NAME=mongodb
 CONF=<%= @node[:mongodb][:config] %>
 REST=<%= @node[:mongodb][:rest] %>
+REPLSET=<%= @node[:mongodb][:replica_set] %>
 PIDFILE=<%= @node[:mongodb][:pidfile] %>
 SYNCDELAY="--syncdelay <%= @node[:mongodb][:syncdelay] %>"
 
@@ -75,6 +76,13 @@ if test "x$REST" = "xtrue"; then
   REST=--rest
 else
   REST=
+fi
+
+# This will make the server part of a replica set
+if test "x$REPLSET" = "x"; then
+  REPLSET=
+else
+  REPLSET="--replSet $REPLSET"
 fi
 
 . /lib/lsb/init-functions
@@ -113,7 +121,7 @@ running() {
 
 start_server() {
 # Start the process using the wrapper
-  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $SYNCDELAY --config $CONF
+  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $REPLSET $SYNCDELAY --config $CONF
   errcode=$?
   return $errcode
 }
