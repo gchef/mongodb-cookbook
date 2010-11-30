@@ -57,6 +57,7 @@ NAME=mongodb
 CONF=<%= @node[:mongodb][:config] %>
 REST=<%= @node[:mongodb][:rest] %>
 REPLSET=<%= @node[:mongodb][:replica_set] %>
+SHARDSVR=<%= @node[:mongodb][:shard_server] %>
 PIDFILE=<%= @node[:mongodb][:pidfile] %>
 SYNCDELAY="--syncdelay <%= @node[:mongodb][:syncdelay] %>"
 
@@ -83,6 +84,13 @@ if test "x$REPLSET" = "x"; then
   REPLSET=
 else
   REPLSET="--replSet $REPLSET"
+fi
+
+# This will make the server participate in sharding
+if test "x$SHARDSVR" = "xtrue"; then
+  SHARDSVR=--shardsvr
+else
+  SHARDSVR=
 fi
 
 . /lib/lsb/init-functions
@@ -121,7 +129,7 @@ running() {
 
 start_server() {
 # Start the process using the wrapper
-  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $REPLSET $SYNCDELAY --config $CONF
+  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $REPLSET $SHARDSVR $SYNCDELAY --config $CONF
   errcode=$?
   return $errcode
 }

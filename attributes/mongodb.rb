@@ -68,6 +68,11 @@ default[:mongodb][:replica_set]   = ""
 
 
 
+### SHARDING
+default[:mongodb][:shard_server]  = false
+
+
+
 ### BACKUP
 default[:mongodb][:backup][:backupdir]    = "/var/backups/mongodb"
 default[:mongodb][:backup][:day]          = 6
