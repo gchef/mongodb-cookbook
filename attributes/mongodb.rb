@@ -82,3 +82,12 @@ default[:mongodb][:backup][:latest]       = "yes"
 default[:mongodb][:backup][:mailaddress]  = false
 default[:mongodb][:backup][:mailcontent]  = "stdout"
 default[:mongodb][:backup][:maxemailsize] = 4000
+
+
+### CONFIG SERVER
+default[:mongodb][:config_server][:datadir]     = "/var/db/mongodb-config"
+default[:mongodb][:config_server][:config]      = "/etc/mongodb-config.conf"
+default[:mongodb][:config_server][:logfile]     = "/var/log/mongodb-config.log"
+default[:mongodb][:config_server][:pidfile]     = "/var/run/mongodb-config.pid"
+default[:mongodb][:config_server][:host]        = "localhost"
+default[:mongodb][:config_server][:port]        = 27019
