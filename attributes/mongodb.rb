@@ -91,3 +91,12 @@ default[:mongodb][:config_server][:logfile]     = "/var/log/mongodb-config.log"
 default[:mongodb][:config_server][:pidfile]     = "/var/run/mongodb-config.pid"
 default[:mongodb][:config_server][:host]        = "localhost"
 default[:mongodb][:config_server][:port]        = 27019
+
+
+
+### MONGOS
+default[:mongodb][:mongos][:config]      = "/etc/mongos.conf"
+default[:mongodb][:mongos][:logfile]     = "/var/log/mongos.log"
+default[:mongodb][:mongos][:pidfile]     = "/var/run/mongos.pid"
+default[:mongodb][:mongos][:host]        = "localhost"
+default[:mongodb][:mongos][:port]        = 27017

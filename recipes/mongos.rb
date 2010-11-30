@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: mongodb
-# Recipe:: source
+# Recipe:: mongos
 #
 # Author:: Gerhard Lazu (<gerhard.lazu@papercavalier.com>)
 #
@@ -19,14 +19,7 @@
 # limitations under the License.
 #
 
-directory node[:mongodb][:config_server][:datadir] do
-  owner "mongodb"
-  group "mongodb"
-  mode 0755
-  recursive true
-end
-
-file node[:mongodb][:config_server][:logfile] do
+file node[:mongodb][:mongos][:logfile] do
   owner "mongodb"
   group "mongodb"
   mode 0644
@@ -34,30 +27,32 @@ file node[:mongodb][:config_server][:logfile] do
   backup false
 end
 
-template node[:mongodb][:config_server][:config] do
-  source "mongodb.conf.erb"
+template node[:mongodb][:mongos][:config] do
+  source "mongos.conf.erb"
   owner "mongodb"
   group "mongodb"
   mode 0644
   backup false
-  variables({:is_config_server => true})
 end
 
-template "/etc/init.d/mongodb-config" do
+configdb_servers = search(:node, 'recipes:mongodb\:\:config_server')
+template "/etc/init.d/mongos" do
   source "mongodb.init.erb"
   mode 0755
   backup false
-  variables({:is_config_server => true})
+  variables({ :is_mongos => true,
+              :configdb_server_list => configdb_servers.collect { |x| x.ec2.local_hostname }.join(',')
+            })
 end
 
-service "mongodb-config" do
+service "mongos" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
-  subscribes :restart, resources(:template => node[:mongodb][:config_server][:config])
-  subscribes :restart, resources(:template => "/etc/init.d/mongodb-config")
+  subscribes :restart, resources(:template => node[:mongodb][:mongos][:config])
+  subscribes :restart, resources(:template => "/etc/init.d/mongos")
 end
 
-# cookbook_file "/etc/logrotate.d/mongodb-config" do
+# cookbook_file "/etc/logrotate.d/mongos" do
 #   source "logrotate"
 #   cookbook "mongodb"
 #   owner "mongodb"
