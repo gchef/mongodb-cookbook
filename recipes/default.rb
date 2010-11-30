@@ -20,3 +20,4 @@
 #
 
 include_recipe "mongodb::source"
+include_recipe "mongodb::server"
