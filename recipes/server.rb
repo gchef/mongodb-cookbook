@@ -42,17 +42,30 @@ template node[:mongodb][:config] do
   backup false
 end
 
-template "/etc/init.d/mongodb" do
-  source "mongodb.init.erb"
-  mode 0755
-  backup false
+if node[:mongodb][:installed_from] == "apt"
+  template '/etc/init/mongodb.conf' do
+    source "mongod.upstart.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    backup false
+  end
+end
+
+if node[:mongodb][:installed_from] == "src"
+  template "/etc/init.d/mongodb" do
+    source "mongodb.init.erb"
+    mode 0755
+    backup false
+  end
 end
 
 service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:config])
-  subscribes :restart, resources(:template => "/etc/init.d/mongodb")
+  subscribes :restart, resources(:template => "/etc/init.d/mongodb") if node[:mongodb][:installed_from] == "src"
+  subscribes :restart, resources(:template => "/etc/init/mongodb.conf") if node[:mongodb][:installed_from] == "apt"
 end
 
 cookbook_file "/etc/logrotate.d/mongodb" do

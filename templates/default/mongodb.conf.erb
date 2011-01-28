@@ -21,6 +21,7 @@ logpath=<%= @node[:mongodb][:logfile] %>
 <% end %>
 logappend=true
 
+bind_ip = <%= @node[:mongodb][:bind_ip] %>
 <% if @is_config_server %>
 port = <%= @node[:mongodb][:config_server][:port] %>
 <% else %>
@@ -126,14 +127,14 @@ nssize = <%= @node[:mongodb][:nssize] %>
   source = <%= @node[:mongodb][:master_source] %>
   <% end %>
 
-  # Address of a server to pair with.
-  pairwith = <%= @node[:mongodb][:pairwith] %>
-  # Address of arbiter server.
-  arbiter = <%= @node[:mongodb][:arbiter] %>
   # Automatically resync if slave data is stale
   <%= p "autoresync" if @node[:mongodb][:autoresync] %>
   # Custom size for replication operation log.
   oplogSize = <%= @node[:mongodb][:oplogsize] %>
   # Size limit for in-memory storage of op ids.
   opIdMem = <%= @node[:mongodb][:opidmem] * 1024 * 1024 %>
+<% end %>
+
+<% if @node[:mongodb][:replica_set] %>
+  replSet = <%= @node[:mongodb][:replica_set] %>
 <% end %>

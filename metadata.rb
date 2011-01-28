@@ -2,16 +2,15 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures MongoDB 1.6.4"
-version           "0.2.5"
+version           "0.2.6"
 
+recipe "mongodb::apt", "Installs MongoDB from 10Gen's apt source and includes init.d script"
 recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
 
 %w{ ubuntu debian }.each do |os|
   supports os
 end
-
-depends "build-essential"
 
 # Package info
 attribute "mongodb/version",

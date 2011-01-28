@@ -21,8 +21,6 @@
 
 platform = node[:kernel][:machine]
 
-include_recipe "build-essential"
-
 user "mongodb" do
   comment "MongoDB Administrator"
   system true
@@ -61,3 +59,4 @@ unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
 
+node[:mongodb][:installed_from] = "src"

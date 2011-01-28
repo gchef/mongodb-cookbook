@@ -38,7 +38,7 @@ DBPASSWORD=<%= @node[:mongodb][:password] %>
 <% end %>
 
 # Host name (or IP address) of mongo server e.g localhost
-DBHOST=<%= @node[:mongodb][:host] %>
+DBHOST=<%= @node[:mongodb][:backup][:host] %>
 
 # Port that mongo is listening on
 DBPORT=<%= @node[:mongodb][:port] %>

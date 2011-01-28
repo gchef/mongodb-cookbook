@@ -1,18 +1,23 @@
-### PACKAGES
+### SOURCE PACKAGES
 default[:mongodb][:version]           = "1.6.4"
 default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
 default[:mongodb][:i686][:checksum]   = "e64d9f4ce31d789caef7370b863cf59d"
 default[:mongodb][:x86_64][:checksum] = "14f89864f3b58fc20f22ec0068325870"
 
 ### GENERAL
-default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}"
+default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}" # For install from source
 default[:mongodb][:datadir]     = "/var/db/mongodb"
 default[:mongodb][:config]      = "/etc/mongodb.conf"
 default[:mongodb][:logfile]     = "/var/log/mongodb.log"
 default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"
-default[:mongodb][:host]        = "localhost"
 default[:mongodb][:port]        = 27017
 
+default[:mongodb][:bind_ip] = \
+  if node[:network][:interfaces][:eth0]
+    node[:network][:interfaces][:eth0][:addresses].select{|address, values| values['family'] == 'inet'}.first.first
+  else
+    "0.0.0.0"
+  end
 
 
 ### EXTRA
@@ -41,7 +46,7 @@ default[:mongodb][:syncdelay]   = 60
 
 
 ### MMS
-default[:mongodb][:mms]         = false
+default[:mongodb][:mms]       = false
 default[:mongodb][:token]     = ""
 default[:mongodb][:name]      = ""
 default[:mongodb][:interval]  = ""
@@ -49,16 +54,13 @@ default[:mongodb][:interval]  = ""
 
 
 ### REPLICATION
-default[:mongodb][:replication]     = false
+default[:mongodb][:replication]   = false
 default[:mongodb][:slave]         = false
 default[:mongodb][:slave_source]  = ""
 default[:mongodb][:slave_only]    = ""
 
 default[:mongodb][:master]        = false
 default[:mongodb][:master_source] = ""
-
-default[:mongodb][:pairwith]      = ""
-default[:mongodb][:arbiter]       = ""
 
 default[:mongodb][:autoresync]    = false
 default[:mongodb][:oplogsize]     = 0
@@ -74,6 +76,7 @@ default[:mongodb][:shard_server]  = false
 
 
 ### BACKUP
+default[:mongodb][:backup][:host]         = "localhost"
 default[:mongodb][:backup][:backupdir]    = "/var/backups/mongodb"
 default[:mongodb][:backup][:day]          = 6
 default[:mongodb][:backup][:compression]  = "bzip2"
