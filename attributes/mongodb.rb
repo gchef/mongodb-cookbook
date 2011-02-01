@@ -1,5 +1,5 @@
 ### SOURCE PACKAGES
-default[:mongodb][:version]           = "1.6.4"
+default[:mongodb][:version]           = "1.6.5"
 default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
 default[:mongodb][:i686][:checksum]   = "e64d9f4ce31d789caef7370b863cf59d"
 default[:mongodb][:x86_64][:checksum] = "14f89864f3b58fc20f22ec0068325870"
