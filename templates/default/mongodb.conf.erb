@@ -135,6 +135,6 @@ nssize = <%= @node[:mongodb][:nssize] %>
   opIdMem = <%= @node[:mongodb][:opidmem] * 1024 * 1024 %>
 <% end %>
 
-<% if @node[:mongodb][:replica_set] %>
+<% unless @node[:mongodb][:replica_set].empty? %>
   replSet = <%= @node[:mongodb][:replica_set] %>
 <% end %>
