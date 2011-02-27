@@ -7,26 +7,19 @@
 # Note: if you run mongodb as a non-root user (recommended) you may
 # need to create and set permissions for this directory manually,
 # e.g., if the parent directory isn't mutable by the mongodb user.
+
 <% if @is_config_server %>
 dbpath=<%= @node[:mongodb][:config_server][:datadir] %>
-<% else %>
-dbpath=<%= @node[:mongodb][:datadir] %>
-<% end %>
-
-#where to log
-<% if @is_config_server %>
 logpath=<%= @node[:mongodb][:config_server][:logfile] %>
-<% else %>
-logpath=<%= @node[:mongodb][:logfile] %>
-<% end %>
-logappend=true
-
-bind_ip = <%= @node[:mongodb][:bind_ip] %>
-<% if @is_config_server %>
 port = <%= @node[:mongodb][:config_server][:port] %>
 <% else %>
+dbpath=<%= @node[:mongodb][:datadir] %>
+logpath=<%= @node[:mongodb][:logfile] %>
 port = <%= @node[:mongodb][:port] %>
 <% end %>
+
+logappend=true
+bind_ip = <%= @node[:mongodb][:bind_ip] %>
 
 <% if @node[:mongodb][:log_cpu_io] %>
 # Enables periodic logging of CPU utilization and I/O wait
