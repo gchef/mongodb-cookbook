@@ -1,8 +1,8 @@
 ### SOURCE PACKAGES
 default[:mongodb][:version]           = "1.6.5"
 default[:mongodb][:source]            = "http://fastdl.mongodb.org/linux/mongodb-linux-#{node[:kernel][:machine]}-#{mongodb[:version]}.tgz"
-default[:mongodb][:i686][:checksum]   = "e64d9f4ce31d789caef7370b863cf59d"
-default[:mongodb][:x86_64][:checksum] = "14f89864f3b58fc20f22ec0068325870"
+default[:mongodb][:i686][:checksum]   = "c2b8dfed2c003ddfab535f0b6dff64d2"
+default[:mongodb][:x86_64][:checksum] = "0a64adafd9772b6b2d748c3b088bd895"
 
 ### GENERAL
 default[:mongodb][:dir]         = "/opt/mongodb-#{mongodb[:version]}" # For install from source
@@ -38,11 +38,9 @@ default[:mongodb][:noprealloc]  = false
 default[:mongodb][:nssize]      = false
 
 
-
 ### STARTUP
 default[:mongodb][:rest]        = false
 default[:mongodb][:syncdelay]   = 60
-
 
 
 ### MMS
@@ -50,7 +48,6 @@ default[:mongodb][:mms]       = false
 default[:mongodb][:token]     = ""
 default[:mongodb][:name]      = ""
 default[:mongodb][:interval]  = ""
-
 
 
 ### REPLICATION
@@ -69,10 +66,8 @@ default[:mongodb][:opidmem]       = 0
 default[:mongodb][:replica_set]   = ""
 
 
-
 ### SHARDING
 default[:mongodb][:shard_server]  = false
-
 
 
 ### BACKUP
@@ -94,7 +89,6 @@ default[:mongodb][:config_server][:logfile]     = "/var/log/mongodb-config.log"
 default[:mongodb][:config_server][:pidfile]     = "/var/run/mongodb-config.pid"
 default[:mongodb][:config_server][:host]        = "localhost"
 default[:mongodb][:config_server][:port]        = 27019
-
 
 
 ### MONGOS

@@ -1,12 +1,16 @@
 maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
-description       "Installs and configures MongoDB 1.6.4"
+description       "Installs and configures MongoDB 1.6.5"
 version           "0.2.6"
 
+recipe "mongodb", "Default recipe simply includes the mongodb::source and mongodb::server recipes"
 recipe "mongodb::apt", "Installs MongoDB from 10Gen's apt source and includes init.d script"
-recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 recipe "mongodb::backup", "Sets up MongoDB backup script, taken from http://github.com/micahwedemeyer/automongobackup"
+recipe "mongodb::config_server", "Sets up config and initialization to run mongod as a config server for sharding"
+recipe "mongodb::mongos", "Sets up config and initialization to run mongos, the MongoDB sharding router"
+recipe "mongodb::server", "Set up config and initialization to run mongod as a database server"
+recipe "mongodb::source", "Installs MongoDB from source and includes init.d script"
 
 %w{ ubuntu debian }.each do |os|
   supports os
@@ -14,31 +18,36 @@ end
 
 # Package info
 attribute "mongodb/version",
-  :display_name => "MongoDB version",
-  :description => "Which MongoDB version will be installed",
-  :default => "1.6.4"
+  :display_name => "MongoDB source version",
+  :description => "Which MongoDB version will be installed from source",
+  :recipes => ["mongodb::source"],
+  :default => "1.6.5"
 
 attribute "mongodb/source",
   :display_name => "MongoDB source file",
-  :description => "Downloaded location for MongoDB"
+  :description => "Downloaded location for MongoDB",
+  :recipes => ["mongodb::source"],
+  :calculated => true
 
 attribute "mongodb/i686/checksum",
   :display_name => "MongoDB 32bit source file checksum",
   :description => "Will make sure the source file is the real deal",
-  :default => "e64d9f4ce31d789caef7370b863cf59d"
+  :recipes => ["mongodb::source"],
+  :default => "c2b8dfed2c003ddfab535f0b6dff64d2"
 
 attribute "mongodb/x86_64/checksum",
   :display_name => "MongoDB 64bit source file checksum",
   :description => "Will make sure the source file is the real deal",
-  :default => "14f89864f3b58fc20f22ec0068325870"
-
+  :recipes => ["mongodb::source"],
+  :default => "0a64adafd9772b6b2d748c3b088bd895"
 
 
 # Paths & port
 attribute "mongodb/dir",
   :display_name => "MongoDB installation path",
-  :description => "MongoDB will be installed here",
-  :default => "/opt/mongodb-1.6.4"
+  :description => "MongoDB will be installed here from source",
+  :recipes => ["mongodb::source"],
+  :default => "/opt/mongodb-1.6.5"
 
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
@@ -65,6 +74,10 @@ attribute "mongodb/port",
   :description => "Accept connections on the specified port",
   :default => "27017"
 
+attribute "mongodb/bind_ip",
+  :display_name => "MongoDB bind IP",
+  :description => "Accept connections on the interface with the given IP, or 0.0.0.0 for all",
+  :default => "IP of eth0 if that interface exists, else 0.0.0.0"
 
 
 # Logging, access & others
@@ -142,18 +155,18 @@ attribute "mongodb/nssize",
   :default => "false"
 
 
-
 # Daemon options
 attribute "mongodb/rest",
   :display_name => "MongoDB REST",
   :description => "Enables REST interface for extra info on Http Interface",
+  :recipes => ["mongodb::source"],
   :default => "false"
 
 attribute "mongodb/syncdelay",
   :display_name => "MongoDB syncdelay",
   :description => "Controls how often changes are flushed to disk",
+  :recipes => ["mongodb::source"],
   :default => "60"
-
 
 
 # Monitoring
@@ -173,7 +186,6 @@ attribute "mongodb/name",
 attribute "mongodb/interval",
   :display_name => "MongoDB mms-interval",
   :description => "Ping interval for Mongo monitoring server"
-
 
 
 # Replication
@@ -204,14 +216,6 @@ attribute "mongodb/master_source",
   :display_name => "MongoDB replication master source",
   :description => "Source for replication"
 
-attribute "mongodb/pairwith",
-  :display_name => "MongoDB replication pairwith",
-  :description => "Address of a server to pair with"
-
-attribute "mongodb/arbiter",
-  :display_name => "MongoDB replication arbiter",
-  :description => "Address of arbiter server"
-
 attribute "mongodb/autoresync",
   :display_name => "MongoDB replication autoresync",
   :description => "Automatically resync if slave data is stale",
@@ -227,9 +231,26 @@ attribute "mongodb/opidmem",
   :description => "Custom size limit for in-memory storage of op ids (in MB)",
   :default => "0"
 
+attribute "mongodb/replica_set",
+  :display_name => "MongoDB replica set", 
+  :description => "Name of a replica set for server to join, passed directly to mongod with --replSet option",
+  :recipes => ["mongodb::source"]
+
+
+# Sharding
+attribute "mongodb/shard_server",
+  :display_name => "MongoDB shard server",
+  :description => "Specify that server should participate in sharding, by passing --shardsvr to mongod startup",
+  :recipes => ["mongodb::source"],
+  :default => false
 
 
 # Backups
+attribute "mongodb/backup/host",
+  :display_name => "MongoDB backup host",
+  :description => "Host address of the MongoDB instance to back up",
+  :default => "localhost"
+
 attribute "mongodb/backup/backupdir",
   :display_name => "MongoDB backup directory",
   :description => "Backup directory location",
@@ -275,3 +296,72 @@ attribute "mongodb/backup/maxemailsize",
   :display_name => "MongoDB backup max email size",
   :description => "Set the maximum allowed email size in k. (4000 = approx 5MB email)",
   :default => "4000"
+
+
+# Config Server
+attribute "mongodb/config_server/datadir",
+  :display_name => "MongoDB config server data store",
+  :description => "All MongoDB config server data will be stored here",
+  :recipes => ["mongodb::source"],
+  :default => "/var/db/mongodb-config"
+
+attribute "mongodb/config_server/config",
+  :display_name => "MongoDB config server configuration",
+  :description => "Path to MongoDB config server config file",
+  :recipes => ["mongodb::source"],
+  :default => "/etc/mongodb-config.conf"
+
+attribute "mongodb/config_server/logfile",
+  :display_name => "MongoDB config server log file",
+  :description => "MongoDB config server will log to this file",
+  :recipes => ["mongodb::source"],
+  :default => "/var/log/mongodb-config.log"
+
+attribute "mongodb/config_server/pidfile",
+  :display_name => "MongoDB config server PID file",
+  :description => "Path to MongoDB config server PID file",
+  :recipes => ["mongodb::source"],
+  :default => "/var/run/mongodb-config.pid"
+
+# FIXME: doesn't appear to be used
+attribute "mongodb/config_server/host",
+  :recipes => ["mongodb::source"],
+  :default => "localhost"
+
+attribute "mongodb/config_server/port",
+  :display_name => "MongoDB config server port",
+  :description => "Accept config server connections on the specified port",
+  :recipes => ["mongodb::source"],
+  :default => 27019
+
+
+# mongos
+attribute "mongodb/mongos/config",
+  :display_name => "MongoDB sharding router configuration",
+  :description => "Path to MongoDB sharding router (mongos) config file",
+  :recipes => ["mongodb::source"],
+  :default => "/etc/mongos.conf"
+
+attribute "mongodb/mongos/logfile",
+  :display_name => "MongoDB sharding router log file",
+  :description => "MongoDB sharding router (mongos) will log to this file",
+  :recipes => ["mongodb::source"],
+  :default => "/var/log/mongos.log"
+
+attribute "mongodb/mongos/pidfile",
+  :display_name => "MongoDB sharding router PID file",
+  :description => "Path to MongoDB sharding router (mongos) PID file",
+  :recipes => ["mongodb::source"],
+  :default => "/var/run/mongos.pid"
+
+# FIXME: doesn't appear to be used
+attribute "mongodb/mongos/host",
+  :recipes => ["mongodb::source"],
+  :default => "localhost"
+
+attribute "mongodb/mongos/port",
+  :display_name => "MongoDB sharding router port",
+  :description => "Accept sharding router (mongos) connections on the specified port. Clients will normally connect to this just as they would a database server.",
+  :recipes => ["mongodb::source"],
+  :default => 27017
+
