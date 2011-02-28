@@ -19,6 +19,13 @@
 # limitations under the License.
 #
 
+installation_source = node[:mongodb][:installed_from]
+server_init = Mash.new(
+  :type     => "mongos",
+  :daemon   => "mongos",
+  :basename => "mongos"
+)
+
 file node[:mongodb][:mongos][:logfile] do
   owner "mongodb"
   group "mongodb"
@@ -36,20 +43,39 @@ template node[:mongodb][:mongos][:config] do
 end
 
 configdb_servers = search(:node, 'recipes:mongodb\:\:config_server')
-template "/etc/init.d/mongos" do
-  source "mongodb.init.erb"
-  mode 0755
-  backup false
-  variables({ :is_mongos => true,
-              :configdb_server_list => configdb_servers.collect { |x| x.ec2.local_hostname }.join(',')
-            })
+# FIXME: Don't depend on EC2 (GH-10)
+configdb_server_list = configdb_servers.collect { |x| x.ec2.local_hostname }.join(',')
+
+case installation_source
+when "apt"
+  template "/etc/init/mongos.conf" do
+    source "mongod.upstart.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    backup false
+    variables(:server_init => server_init, :configdb_server_list => configdb_server_list)
+  end
+when "src"
+  template "/etc/init.d/mongos" do
+    source "mongodb.init.erb"
+    mode 0755
+    backup false
+    variables(:server_init => server_init, :configdb_server_list => configdb_server_list)
+  end
 end
 
 service "mongos" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:mongos][:config])
-  subscribes :restart, resources(:template => "/etc/init.d/mongos")
+  case installation_source
+  when "apt"
+    subscribes :restart, resources(:template => "/etc/init/mongos.conf")
+    provider Chef::Provider::Service::Upstart
+  else
+    subscribes :restart, resources(:template => "/etc/init.d/mongos")
+  end
 end
 
 # cookbook_file "/etc/logrotate.d/mongos" do

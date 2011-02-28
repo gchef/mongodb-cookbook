@@ -159,13 +159,13 @@ attribute "mongodb/nssize",
 attribute "mongodb/rest",
   :display_name => "MongoDB REST",
   :description => "Enables REST interface for extra info on Http Interface",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::server", "mongodb::config_server"],
   :default => "false"
 
 attribute "mongodb/syncdelay",
   :display_name => "MongoDB syncdelay",
   :description => "Controls how often changes are flushed to disk",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::server", "mongodb::config_server"],
   :default => "60"
 
 
@@ -234,14 +234,14 @@ attribute "mongodb/opidmem",
 attribute "mongodb/replica_set",
   :display_name => "MongoDB replica set", 
   :description => "Name of a replica set for server to join, passed directly to mongod with --replSet option",
-  :recipes => ["mongodb::source"]
+  :recipes => ["mongodb::server"]
 
 
 # Sharding
 attribute "mongodb/shard_server",
   :display_name => "MongoDB shard server",
   :description => "Specify that server should participate in sharding, by passing --shardsvr to mongod startup",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::server"],
   :default => false
 
 
@@ -302,36 +302,36 @@ attribute "mongodb/backup/maxemailsize",
 attribute "mongodb/config_server/datadir",
   :display_name => "MongoDB config server data store",
   :description => "All MongoDB config server data will be stored here",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => "/var/db/mongodb-config"
 
 attribute "mongodb/config_server/config",
   :display_name => "MongoDB config server configuration",
   :description => "Path to MongoDB config server config file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => "/etc/mongodb-config.conf"
 
 attribute "mongodb/config_server/logfile",
   :display_name => "MongoDB config server log file",
   :description => "MongoDB config server will log to this file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => "/var/log/mongodb-config.log"
 
 attribute "mongodb/config_server/pidfile",
   :display_name => "MongoDB config server PID file",
   :description => "Path to MongoDB config server PID file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => "/var/run/mongodb-config.pid"
 
 # FIXME: doesn't appear to be used
 attribute "mongodb/config_server/host",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => "localhost"
 
 attribute "mongodb/config_server/port",
   :display_name => "MongoDB config server port",
   :description => "Accept config server connections on the specified port",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::config_server"],
   :default => 27019
 
 
@@ -339,29 +339,29 @@ attribute "mongodb/config_server/port",
 attribute "mongodb/mongos/config",
   :display_name => "MongoDB sharding router configuration",
   :description => "Path to MongoDB sharding router (mongos) config file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::mongos"],
   :default => "/etc/mongos.conf"
 
 attribute "mongodb/mongos/logfile",
   :display_name => "MongoDB sharding router log file",
   :description => "MongoDB sharding router (mongos) will log to this file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::mongos"],
   :default => "/var/log/mongos.log"
 
 attribute "mongodb/mongos/pidfile",
   :display_name => "MongoDB sharding router PID file",
   :description => "Path to MongoDB sharding router (mongos) PID file",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::mongos"],
   :default => "/var/run/mongos.pid"
 
 # FIXME: doesn't appear to be used
 attribute "mongodb/mongos/host",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::mongos"],
   :default => "localhost"
 
 attribute "mongodb/mongos/port",
   :display_name => "MongoDB sharding router port",
   :description => "Accept sharding router (mongos) connections on the specified port. Clients will normally connect to this just as they would a database server.",
-  :recipes => ["mongodb::source"],
+  :recipes => ["mongodb::mongos"],
   :default => 27017
 

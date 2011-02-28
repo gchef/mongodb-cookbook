@@ -19,6 +19,13 @@
 # limitations under the License.
 #
 
+installation_source = node[:mongodb][:installed_from]
+server_init = Mash.new(
+  :type     => "mongodb",
+  :daemon   => "mongod",
+  :basename => "mongodb"
+)
+
 directory node[:mongodb][:datadir] do
   owner "mongodb"
   group "mongodb"
@@ -42,21 +49,22 @@ template node[:mongodb][:config] do
   backup false
 end
 
-if node[:mongodb][:installed_from] == "apt"
+case installation_source
+when "apt"
   template '/etc/init/mongodb.conf' do
     source "mongod.upstart.erb"
     owner "root"
     group "root"
     mode 0644
     backup false
+    variables(:server_init => server_init)
   end
-end
-
-if node[:mongodb][:installed_from] == "src"
+when "src"
   template "/etc/init.d/mongodb" do
     source "mongodb.init.erb"
     mode 0755
     backup false
+    variables(:server_init => server_init)
   end
 end
 
@@ -64,8 +72,13 @@ service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:config])
-  subscribes :restart, resources(:template => "/etc/init.d/mongodb") if node[:mongodb][:installed_from] == "src"
-  subscribes :restart, resources(:template => "/etc/init/mongodb.conf") if node[:mongodb][:installed_from] == "apt"
+  case installation_source
+  when "apt"
+    subscribes :restart, resources(:template => "/etc/init/mongodb.conf")
+    provider Chef::Provider::Service::Upstart
+  else
+    subscribes :restart, resources(:template => "/etc/init.d/mongodb")
+  end
 end
 
 cookbook_file "/etc/logrotate.d/mongodb" do
