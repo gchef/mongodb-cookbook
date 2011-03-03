@@ -78,10 +78,12 @@ service "mongos" do
   end
 end
 
-# cookbook_file "/etc/logrotate.d/mongos" do
-#   source "logrotate"
-#   cookbook "mongodb"
-#   owner "mongodb"
-#   group "mongodb"
-#   mode "0644"
-# end
+template "/etc/logrotate.d/#{server_init[:basename]}" do
+  source "mongodb.logrotate.erb"
+  owner "mongodb"
+  group "mongodb"
+  mode "0644"
+  backup false
+  variables(:logfile => node[:mongodb][:mongos][:logfile])
+end
+
