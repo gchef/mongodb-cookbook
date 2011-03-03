@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-installation_source = node[:mongodb][:installed_from]
+init_system = node[:mongodb][:init_system]
 server_init = Mash.new(
   :type     => "mongos",
   :daemon   => "mongos",
@@ -46,8 +46,8 @@ configdb_servers = search(:node, 'recipes:mongodb\:\:config_server')
 # FIXME: Don't depend on EC2 (GH-10)
 configdb_server_list = configdb_servers.collect { |x| x.ec2.local_hostname }.join(',')
 
-case installation_source
-when "apt"
+case init_system
+when "upstart"
   template "/etc/init/mongos.conf" do
     source "mongod.upstart.erb"
     owner "root"
@@ -56,7 +56,7 @@ when "apt"
     backup false
     variables(:server_init => server_init, :configdb_server_list => configdb_server_list)
   end
-when "src"
+when "sysv"
   template "/etc/init.d/mongos" do
     source "mongodb.init.erb"
     mode 0755
@@ -69,8 +69,8 @@ service "mongos" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:mongos][:config])
-  case installation_source
-  when "apt"
+  case init_system
+  when "upstart"
     subscribes :restart, resources(:template => "/etc/init/mongos.conf")
     provider Chef::Provider::Service::Upstart
   else

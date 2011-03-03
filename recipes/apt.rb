@@ -37,5 +37,3 @@ template "/etc/apt/sources.list.d/mongodb.list" do
 end
 
 package "mongodb-stable"
-
-node[:mongodb][:installed_from] = "apt"

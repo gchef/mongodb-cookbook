@@ -11,6 +11,7 @@ default[:mongodb][:config]      = "/etc/mongodb.conf"
 default[:mongodb][:logfile]     = "/var/log/mongodb.log"
 default[:mongodb][:pidfile]     = "/var/run/mongodb.pid"
 default[:mongodb][:port]        = 27017
+default[:mongodb][:init_system] = "sysv"
 
 default[:mongodb][:bind_ip] = \
   if node[:network][:interfaces][:eth0]

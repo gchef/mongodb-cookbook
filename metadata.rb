@@ -74,6 +74,12 @@ attribute "mongodb/port",
   :description => "Accept connections on the specified port",
   :default => "27017"
 
+attribute "mongodb/init_system",
+  :display_name => "MongoDB init System",
+  :description => "Init system to use for mongo servers",
+  :choice => ["sysv", "upstart"],
+  :default => "sysv"
+
 attribute "mongodb/bind_ip",
   :display_name => "MongoDB bind IP",
   :description => "Accept connections on the interface with the given IP, or 0.0.0.0 for all",

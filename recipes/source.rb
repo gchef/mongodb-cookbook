@@ -58,5 +58,3 @@ environment = File.read('/etc/environment')
 unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
-
-node[:mongodb][:installed_from] = "src"

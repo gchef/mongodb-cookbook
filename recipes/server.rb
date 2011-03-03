@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-installation_source = node[:mongodb][:installed_from]
+init_system = node[:mongodb][:init_system]
 server_init = Mash.new(
   :type     => "mongodb",
   :daemon   => "mongod",
@@ -49,8 +49,8 @@ template node[:mongodb][:config] do
   backup false
 end
 
-case installation_source
-when "apt"
+case init_system
+when "upstart"
   template '/etc/init/mongodb.conf' do
     source "mongod.upstart.erb"
     owner "root"
@@ -59,7 +59,7 @@ when "apt"
     backup false
     variables(:server_init => server_init)
   end
-when "src"
+when "sysv"
   template "/etc/init.d/mongodb" do
     source "mongodb.init.erb"
     mode 0755
@@ -72,8 +72,8 @@ service "mongodb" do
   supports :start => true, :stop => true, "force-stop" => true, :restart => true, "force-reload" => true, :status => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:mongodb][:config])
-  case installation_source
-  when "apt"
+  case init_system
+  when "upstart"
     subscribes :restart, resources(:template => "/etc/init/mongodb.conf")
     provider Chef::Provider::Service::Upstart
   else
