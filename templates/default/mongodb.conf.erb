@@ -111,8 +111,12 @@ nssize = <%= @node[:mongodb][:nssize] %>
   <% if @node[:mongodb][:slave] %>
   slave = <%= @node[:mongodb][:slave] %>
   source = <%= @node[:mongodb][:slave_source] %>
+
   # Slave only: specify a single database to replicate
+  <% unless @node[:mongodb][:slave_only].empty? %>
   only = <%= @node[:mongodb][:slave_only] %>
+  <% end %>
+
   <% end %>
 
   <% if @node[:mongodb][:master] %>
