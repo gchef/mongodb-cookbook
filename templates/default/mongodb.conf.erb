@@ -121,7 +121,7 @@ nssize = <%= @node[:mongodb][:nssize] %>
   <% end %>
 
   # Automatically resync if slave data is stale
-  <%= p "autoresync" if @node[:mongodb][:autoresync] %>
+  <%= "autoresync" if @node[:mongodb][:autoresync] %>
   # Custom size for replication operation log.
   oplogSize = <%= @node[:mongodb][:oplogsize] %>
   # Size limit for in-memory storage of op ids.
