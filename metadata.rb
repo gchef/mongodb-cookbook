@@ -247,8 +247,7 @@ attribute "mongodb/replica_set",
 attribute "mongodb/shard_server",
   :display_name => "MongoDB shard server",
   :description => "Specify that server should participate in sharding, by passing --shardsvr to mongod startup",
-  :recipes => ["mongodb::server"],
-  :default => false
+  :recipes => ["mongodb::server"]
 
 
 # Backups
@@ -338,7 +337,7 @@ attribute "mongodb/config_server/port",
   :display_name => "MongoDB config server port",
   :description => "Accept config server connections on the specified port",
   :recipes => ["mongodb::config_server"],
-  :default => 27019
+  :default => "27019"
 
 
 # mongos
@@ -369,5 +368,5 @@ attribute "mongodb/mongos/port",
   :display_name => "MongoDB sharding router port",
   :description => "Accept sharding router (mongos) connections on the specified port. Clients will normally connect to this just as they would a database server.",
   :recipes => ["mongodb::mongos"],
-  :default => 27017
+  :default => "27017"
 
