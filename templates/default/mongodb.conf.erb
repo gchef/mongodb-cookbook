@@ -117,7 +117,6 @@ nssize = <%= @node[:mongodb][:nssize] %>
 
   <% if @node[:mongodb][:master] %>
   master = <%= @node[:mongodb][:master] %>
-  source = <%= @node[:mongodb][:master_source] %>
   <% end %>
 
   # Automatically resync if slave data is stale

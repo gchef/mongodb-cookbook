@@ -58,7 +58,6 @@ default[:mongodb][:slave_source]  = ""
 default[:mongodb][:slave_only]    = ""
 
 default[:mongodb][:master]        = false
-default[:mongodb][:master_source] = ""
 
 default[:mongodb][:autoresync]    = false
 default[:mongodb][:oplogsize]     = 0
