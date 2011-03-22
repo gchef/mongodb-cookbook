@@ -1,7 +1,7 @@
 maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
-description       "Installs and configures MongoDB 1.6.5"
+description       "Installs and configures MongoDB 1.8.0"
 version           "0.2.6"
 
 recipe "mongodb", "Default recipe simply includes the mongodb::source and mongodb::server recipes"
@@ -21,7 +21,7 @@ attribute "mongodb/version",
   :display_name => "MongoDB source version",
   :description => "Which MongoDB version will be installed from source",
   :recipes => ["mongodb::source"],
-  :default => "1.6.5"
+  :default => "1.8.0"
 
 attribute "mongodb/source",
   :display_name => "MongoDB source file",
@@ -33,13 +33,13 @@ attribute "mongodb/i686/checksum",
   :display_name => "MongoDB 32bit source file checksum",
   :description => "Will make sure the source file is the real deal",
   :recipes => ["mongodb::source"],
-  :default => "c2b8dfed2c003ddfab535f0b6dff64d2"
+  :default => "b0b4d98968960cc90d2900ab0135bc24"
 
 attribute "mongodb/x86_64/checksum",
   :display_name => "MongoDB 64bit source file checksum",
   :description => "Will make sure the source file is the real deal",
   :recipes => ["mongodb::source"],
-  :default => "0a64adafd9772b6b2d748c3b088bd895"
+  :default => "d764d869f2a3984251cfea5335cc6c53"
 
 
 # Paths & port
@@ -47,7 +47,7 @@ attribute "mongodb/dir",
   :display_name => "MongoDB installation path",
   :description => "MongoDB will be installed here from source",
   :recipes => ["mongodb::source"],
-  :default => "/opt/mongodb-1.6.5"
+  :default => "/opt/mongodb-1.8.0"
 
 attribute "mongodb/datadir",
   :display_name => "MongoDB data store",
