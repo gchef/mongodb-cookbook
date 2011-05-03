@@ -21,6 +21,6 @@
 
 template "/etc/cron.daily/automongobackup" do
   source "automongobackup.sh.erb"
-  mode 0755
+  mode "0755"
   backup false
 end

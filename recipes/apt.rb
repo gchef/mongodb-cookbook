@@ -31,9 +31,11 @@ end
 template "/etc/apt/sources.list.d/mongodb.list" do
   owner "root"
   mode "0644"
-  source "mongodb.list.#{node[:platform]}.erb"
+  source "mongodb.list.erb"
   notifies :run, resources(:execute => "add 10gen apt key"), :immediately
   notifies :run, resources(:execute => "apt-get update"), :immediately
 end
 
 package "mongodb-10gen"
+
+node[:mongodb][:installed_from] = "apt"

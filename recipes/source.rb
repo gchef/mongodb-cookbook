@@ -31,7 +31,7 @@ end
   directory dir do
     owner "mongodb"
     group "mongodb"
-    mode 0755
+    mode "0755"
     recursive true
   end
 end
@@ -58,3 +58,5 @@ environment = File.read('/etc/environment')
 unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
+
+node[:mongodb][:installed_from] = "src"
