@@ -79,10 +79,10 @@ class Chef
         subscribes :restart, resources(:template => "/etc/init/#{service_name}.conf") if node[:mongodb][:installed_from] == "apt"
       end
 
-      logrotate "mongodb-#{service_name}" do
-        files config[:logpath]
+      logrotate_app "mongodb-#{service_name}" do
+        path config[:logpath]
         frequency "daily"
-        rotate_count 7
+        rotate 7
         compress true
         # http://www.mongodb.org/display/DOCS/Logging
         restart_command "kill -SIGUSR1 `cat #{config[:pidfile]}`"

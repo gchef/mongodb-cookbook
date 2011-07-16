@@ -1,12 +1,13 @@
-<%= node[:mongodb][:logfile] %> {
-  daily
+<%= @path %> {
+  <%= @frequency %>
   missingok
   notifempty
   copytruncate
-  rotate 7
+  rotate <%= @rotate %>
   compress
   compresscmd /bin/bzip2
   uncompresscmd /bin/bunzip2
   compressext .bz2
   dateext
 }
+

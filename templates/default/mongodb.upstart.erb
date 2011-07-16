@@ -12,7 +12,7 @@ pre-start script
   mkdir -p <%= @config[:dbpath] %>
   chown -R mongodb:mongodb <%= @config[:dbpath] %>
   <% end %>
-  mkdir -p <%= File.dirname(@config[:logfile]) %>
+  mkdir -p <%= File.dirname(@config[:logpath]) %>
 end script
 
 start on runlevel [2345]
@@ -28,7 +28,7 @@ script
   CONF=<%= @config[:config] %>
   PIDFILE=<%= @config[:pidfile] %>
 
-  <% case server_type; when 'config_server' %>
+  <% case @server_type; when 'config_server' %>
   CONFIGSVR=--configsvr
   <% when 'mongos' %>
   CONFIGDB="--configdb <%= @configdb_server_list %>"
@@ -37,7 +37,7 @@ script
   SHARDSVR=<%= node[:mongodb][:shard_server] %>
   <% end %>
 
-  <% unless server_type == 'mongos' %>
+  <% unless @server_type == 'mongos' %>
   REST=<%= node[:mongodb][:rest] %>
   SYNCDELAY="--syncdelay <%= node[:mongodb][:syncdelay] %>"
   <% end %>
@@ -73,3 +73,4 @@ script
 
   if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb --exec  /usr/bin/$DAEMON -- $REST $REPLSET $SHARDSVR $CONFIGSVR $SYNCDELAY $CONFIGDB --config $CONF; fi
 end script
+

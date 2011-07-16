@@ -37,7 +37,7 @@
 		:replSet, # replica set name
 		:verbose, # Verbose logging output.
 	].each do |option|
-		if config[option] && !config[option].empty?
+		if config[option] && !config[option].to_s.empty?
 %>
 <%= option %> = <%= config[option] %>
 <%
