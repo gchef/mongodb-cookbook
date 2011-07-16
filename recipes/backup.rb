@@ -24,3 +24,4 @@ template "/etc/cron.daily/automongobackup" do
   mode "0755"
   backup false
 end
+

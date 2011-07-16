@@ -39,3 +39,4 @@ end
 package "mongodb-10gen"
 
 node[:mongodb][:installed_from] = "apt"
+

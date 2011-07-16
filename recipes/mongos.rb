@@ -30,3 +30,4 @@ end
 
 init_variables = { :configdb_server_list => config_db_nodes.collect { |n| "#{n[:mongodb][:config_server][:bind_ip]}:#{n[:mongodb][:config_server][:port]}" }.join(',') }
 mongodb_process(:mongos, :init => init_variables)
+

@@ -59,4 +59,12 @@ unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
 
+# from mikezter
+template "/etc/init.d/mongodb" do
+  source "mongodb.init.erb"
+  mode "0755"
+  backup false
+end
+
 node[:mongodb][:installed_from] = "src"
+
