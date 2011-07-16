@@ -40,7 +40,7 @@ class Chef
       init_variables = variables[:init] || {}
       init_variables[:server_type] = name.to_sym
 
-      case node[:mongodb][:system_init]
+      case node[:mongodb][init_variables[:server_type]][:system_init]
         when "upstart"
         template "/etc/init/#{service_name}.conf" do
           source "mongodb.upstart.erb"

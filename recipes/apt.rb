@@ -38,5 +38,15 @@ end
 
 package "mongodb-10gen"
 
+if File.exists?("/etc/init.d/mongodb") # blow away the package-provided scripts because we're going to install our own via template
+  service "mongodb" do
+    action [ :stop, :disable ]
+  end
+
+  file "/etc/init.d/mongodb" do
+    action :delete
+  end
+end
+
 node[:mongodb][:installed_from] = "apt"
 

@@ -11,7 +11,7 @@
 
 	[
 		# :auth, # authentication
-		:bind_ip,
+		#:bind_ip,
 		:cpu, # Enables periodic logging of CPU utilization and I/O wait
 		:datadir,
 		:dbpath,
@@ -44,6 +44,7 @@
 		end
 	end
 %>
+bind_ip = <%= config[:bind_ip].join(",")%>
 
 <% if config[:auth] %>
 # Turn on/off security. Off is currently the default

@@ -21,7 +21,7 @@ stop on runlevel [06]
 script
   ENABLE_MONGODB="yes"
 
-  DAEMON=<%= @binary %>
+  DAEMON=/usr/bin/<%= @binary %>
   NAME=<%= @server_type %>
 
   # Default defaults. Can be overridden by the /etc/default/$NAME
@@ -33,13 +33,13 @@ script
   <% when 'mongos' %>
   CONFIGDB="--configdb <%= @configdb_server_list %>"
   <% else %>
-  REPLSET=<%= node[:mongodb][:replica_set] %>
-  SHARDSVR=<%= node[:mongodb][:shard_server] %>
+  REPLSET=<%= node[:mongodb][@server_type.to_sym][:replica_set] %>
+  SHARDSVR=<%= node[:mongodb][@server_type.to_sym][:shard_server] %>
   <% end %>
 
   <% unless @server_type == 'mongos' %>
-  REST=<%= node[:mongodb][:rest] %>
-  SYNCDELAY="--syncdelay <%= node[:mongodb][:syncdelay] %>"
+  REST=<%= node[:mongodb][@server_type.to_sym][:rest] %>
+  SYNCDELAY="--syncdelay <%= node[:mongodb][@server_type.to_sym][:syncdelay] %>"
   <% end %>
 
   if [ -f /etc/default/$NAME ]; then . /etc/default/$NAME; fi
@@ -71,6 +71,6 @@ script
     SHARDSVR=
   fi
 
-  if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb --exec  /usr/bin/$DAEMON -- $REST $REPLSET $SHARDSVR $CONFIGSVR $SYNCDELAY $CONFIGDB --config $CONF; fi
+  if [ "x$ENABLE_MONGODB" = "xyes" ]; then exec start-stop-daemon --start --quiet --chuid mongodb --exec $DAEMON -- $REST $REPLSET $SHARDSVR $CONFIGSVR $SYNCDELAY $CONFIGDB --config $CONF; fi
 end script
 
