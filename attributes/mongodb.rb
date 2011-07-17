@@ -45,6 +45,8 @@ default[:mongodb][:server][:nssize]                = false
 default[:mongodb][:server][:objcheck]              = false
 default[:mongodb][:server][:quota]                 = false
 default[:mongodb][:server][:verbose]               = false
+default[:mongodb][:server][:fastsync]              = false
+default[:mongodb][:server][:journal]               = false
 
 ### STARTUP
 default[:mongodb][:server][:rest]                  = false
