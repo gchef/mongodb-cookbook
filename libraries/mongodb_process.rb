@@ -40,7 +40,7 @@ class Chef
       init_variables = variables[:init] || {}
       init_variables[:server_type] = name.to_sym
 
-      case node[:mongodb][init_variables[:server_type]][:system_init]
+      case config[:system_init]
         when "upstart"
         template "/etc/init/#{service_name}.conf" do
           source "mongodb.upstart.erb"
@@ -75,8 +75,8 @@ class Chef
         end
 
         subscribes :restart, resources(:template => config[:config])
-        subscribes :restart, resources(:template => "/etc/init.d/#{service_name}") if node[:mongodb][:installed_from] == "src"
-        subscribes :restart, resources(:template => "/etc/init/#{service_name}.conf") if node[:mongodb][:installed_from] == "apt"
+        subscribes :restart, resources(:template => "/etc/init.d/#{service_name}") if config[:system_init] == "sysv"
+        subscribes :restart, resources(:template => "/etc/init/#{service_name}.conf") if config[:system_init] == "upstart"
       end
 
       logrotate_app "mongodb-#{service_name}" do
