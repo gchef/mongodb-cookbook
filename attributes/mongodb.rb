@@ -45,8 +45,8 @@ default[:mongodb][:server][:nssize]                = false
 default[:mongodb][:server][:objcheck]              = false
 default[:mongodb][:server][:quota]                 = false
 default[:mongodb][:server][:verbose]               = false
-default[:mongodb][:server][:fastsync]              = false
 default[:mongodb][:server][:journal]               = false
+# slowms
 
 ### STARTUP
 default[:mongodb][:server][:rest]                  = false
@@ -58,17 +58,29 @@ default[:mongodb][:server]['mms-interval']         = "" # mikezter - default[:mo
 default[:mongodb][:server]['mms-name']             = "" # mikezter - default[:mongodb][:name]
 default[:mongodb][:server]['mms-token']            = "" # mikezter - default[:mongodb][:interval]
 
-### REPLICATION
-default[:mongodb][:server][:autoresync]            = false
+### MASTER/SLAVE
 default[:mongodb][:server][:master]                = false # from papercavalier
 default[:mongodb][:server][:master_source]         = "" # from papercavalier
-default[:mongodb][:server][:opidmem]               = 0
+default[:mongodb][:server][:slave]                 = false # from papercavalier
+default[:mongodb][:server][:slave_source]          = "" # from papercavalier
+default[:mongodb][:server][:slave_only]            = "" # from papercavalier
+
+### MASTER/SLAVE & REPLICATION
+default[:mongodb][:server][:arbiter]               = ""
 default[:mongodb][:server][:oplogsize]             = 0
+default[:mongodb][:server][:autoresync]            = false
+
+### REPLICATION
 default[:mongodb][:server][:replication]           = false
 default[:mongodb][:server][:replSet]               = "" # mikezter - default[:mongodb][:replica_set]   = "none"
-default[:mongodb][:server][:slave]                 = false # from papercavalier
-default[:mongodb][:server][:slave_only]            = "" # from papercavalier
-default[:mongodb][:server][:slave_source]          = "" # from papercavalier
+default[:mongodb][:server][:fastsync]              = false
+default[:mongodb][:server][:opidmem]               = 0
+#keyfile
+#votes
+#hidden
+#buildIndexes
+#slaveDelay
+
 # mikezter - default[:mongodb][:replica_member_id] = 1
 # mikezter - default[:mongodb][:replica_priority] = 1 # set to 0 if the node should never become master
 # mikezter - default[:mongodb][:replica_initializer] = false # true if the node should initialize the set

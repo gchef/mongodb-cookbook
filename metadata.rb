@@ -186,7 +186,7 @@ attribute "mongodb/server/replication",
   :description => "Enable if you want to configure replication",
   :default => "false"
 
-#attribute "mongodb/arbiter",
+#attribute "mongodb/server/arbiter",
 #  :display_name => "MongoDB replication arbiter",
 #  :description => "Address of arbiter server"
 
