@@ -66,12 +66,12 @@ default[:mongodb][:server][:slave_source]          = "" # from papercavalier
 default[:mongodb][:server][:slave_only]            = "" # from papercavalier
 
 ### MASTER/SLAVE & REPLICATION
+default[:mongodb][:server][:replication]           = false
 default[:mongodb][:server][:arbiter]               = ""
 default[:mongodb][:server][:oplogsize]             = 0
 default[:mongodb][:server][:autoresync]            = false
 
 ### REPLICATION
-default[:mongodb][:server][:replication]           = false
 default[:mongodb][:server][:replSet]               = "" # mikezter - default[:mongodb][:replica_set]   = "none"
 default[:mongodb][:server][:fastsync]              = false
 default[:mongodb][:server][:opidmem]               = 0
