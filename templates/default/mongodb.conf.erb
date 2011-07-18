@@ -108,7 +108,7 @@ opIdMem = <%= config[:opidmem] * 1024 * 1024 %>
 # Custom size for replication operation log in MB
 oplogSize = <%= config[:oplogsize] %>
 <% end %>
-<% if config[:oplogsize] %>
+<% if config[:arbiter] %>
 # Address of arbiter server
 arbiter = <%= config[:arbiter] %>
 <% end %>

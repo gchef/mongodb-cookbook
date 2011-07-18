@@ -60,7 +60,6 @@ default[:mongodb][:server][:mms_token]            = "" # mikezter - default[:mon
 
 ### MASTER/SLAVE
 default[:mongodb][:server][:master]                = false # from papercavalier
-default[:mongodb][:server][:master_source]         = "" # from papercavalier
 default[:mongodb][:server][:slave]                 = false # from papercavalier
 default[:mongodb][:server][:slave_source]          = "" # from papercavalier
 default[:mongodb][:server][:slave_only]            = "" # from papercavalier
