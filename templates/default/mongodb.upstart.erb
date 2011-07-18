@@ -33,7 +33,7 @@ script
   <% when 'mongos' %>
   CONFIGDB="--configdb <%= @configdb_server_list %>"
   <% else %>
-  REPLSET=<%= @config[:replica_set] %>
+  REPLSET=<%= @config[:replSet] %>
   SHARDSVR=<%= @config[:shard_server] %>
   <% end %>
 

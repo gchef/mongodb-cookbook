@@ -53,7 +53,7 @@
   @binary = @server_type == :mongos ? 'mongos' : 'mongod'
 %>
 
-PATH=/usr/bin
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/<%= @binary %>
 DESC=database
 NAME=<%= @server_type %>
