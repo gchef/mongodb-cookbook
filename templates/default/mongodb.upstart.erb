@@ -33,13 +33,13 @@ script
   <% when 'mongos' %>
   CONFIGDB="--configdb <%= @configdb_server_list %>"
   <% else %>
-  REPLSET=<%= node[:mongodb][@server_type.to_sym][:replica_set] %>
-  SHARDSVR=<%= node[:mongodb][@server_type.to_sym][:shard_server] %>
+  REPLSET=<%= @config[:replica_set] %>
+  SHARDSVR=<%= @config[:shard_server] %>
   <% end %>
 
   <% unless @server_type == 'mongos' %>
-  REST=<%= node[:mongodb][@server_type.to_sym][:rest] %>
-  SYNCDELAY="--syncdelay <%= node[:mongodb][@server_type.to_sym][:syncdelay] %>"
+  REST=<%= @config[:rest] %>
+  SYNCDELAY="--syncdelay <%= @config[:syncdelay] %>"
   <% end %>
 
   if [ -f /etc/default/$NAME ]; then . /etc/default/$NAME; fi

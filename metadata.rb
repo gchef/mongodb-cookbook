@@ -168,15 +168,15 @@ attribute "mongodb/server/mms",
   :description => "Enable when you have a Mongo monitoring server",
   :default => "false"
 
-attribute "mongodb/server/token",
+attribute "mongodb/server/mms_token",
   :display_name => "MongoDB mms-token",
   :description => "Accout token for Mongo monitoring server"
 
-attribute "mongodb/server/name",
+attribute "mongodb/server/mms_name",
   :display_name => "MongoDB mms-name",
   :description => "Server name for Mongo monitoring server"
 
-attribute "mongodb/server/interval",
+attribute "mongodb/server/mms_interval",
   :display_name => "MongoDB mms-interval",
   :description => "Ping interval for Mongo monitoring server"
 

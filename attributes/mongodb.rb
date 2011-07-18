@@ -54,9 +54,9 @@ default[:mongodb][:server][:syncdelay]             = 60
 
 ### MMS
 default[:mongodb][:server][:mms]                   = false
-default[:mongodb][:server]['mms-interval']         = "" # mikezter - default[:mongodb][:token]
-default[:mongodb][:server]['mms-name']             = "" # mikezter - default[:mongodb][:name]
-default[:mongodb][:server]['mms-token']            = "" # mikezter - default[:mongodb][:interval]
+default[:mongodb][:server][:mms_interval]         = "" # mikezter - default[:mongodb][:token]
+default[:mongodb][:server][:mms_name]             = "" # mikezter - default[:mongodb][:name]
+default[:mongodb][:server][:mms_token]            = "" # mikezter - default[:mongodb][:interval]
 
 ### MASTER/SLAVE
 default[:mongodb][:server][:master]                = false # from papercavalier

@@ -56,13 +56,13 @@ noauth = true
 
 <% if config[:mms] %>
   # Accout token for Mongo monitoring server.
-  mms-token = <%= config[:token] %>
+  mms-token = <%= config[:mms_token] %>
 
   # Server name for Mongo monitoring server.
-  mms-name = <%= config[:name] %>
+  mms-name = <%= config[:mms_name] %>
 
   # Ping interval for Mongo monitoring server.
-  mms-interval = <%= config[:interval] %>
+  mms-interval = <%= config[:mms_interval] %>
 <% end %>
 
 <% if config[:replication] %>

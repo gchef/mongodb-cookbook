@@ -48,33 +48,32 @@
 #                    functionality are the goals for the project.
 ### END INIT INFO
 
-<% server_type = @server_init[:type] %>
-PATH=<%= @node[:mongodb][:dir] %>/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=<%= @node[:mongodb][:dir] %>/bin/<%= @server_init[:daemon] %>
+<%
+  @config = node[:mongodb][@server_type]
+  @binary = @server_type == :mongos ? 'mongos' : 'mongod'
+%>
+
+PATH=/usr/bin
+DAEMON=/usr/bin/<%= @binary %>
 DESC=database
-NAME=<%= @server_init[:basename] %>
+NAME=<%= @server_type %>
 
 # Default defaults.  Can be overridden by the /etc/default/$NAME
-<% if server_type == 'mongodb' %>
-CONF=<%= @node[:mongodb][:config] %>
-PIDFILE=<%= @node[:mongodb][:pidfile] %>
-<% else %>
-CONF=<%= @node[:mongodb][server_type][:config] %>
-PIDFILE=<%= @node[:mongodb][server_type][:pidfile] %>
-<% end %>
+CONF=<%= @config[:config] %>
+PIDFILE=<%= @config[:pidfile] %>
 
-<% case server_type; when 'config_server' %>
+<% case @server_type; when 'config_server' %>
 CONFIGSVR=--configsvr
 <% when 'mongos' %>
 CONFIGDB="--configdb <%= @configdb_server_list %>"
 <% else %>
-REPLSET=<%= @node[:mongodb][:replica_set] %>
-SHARDSVR=<%= @node[:mongodb][:shard_server] %>
+REPLSET=<%= @config[:replSet] %>
+SHARDSVR=<%= @config[:shard_server] %>
 <% end %>
 
-<% unless server_type == 'mongos' %>
-REST=<%= @node[:mongodb][:rest] %>
-SYNCDELAY="--syncdelay <%= @node[:mongodb][:syncdelay] %>"
+<% unless @server_type == 'mongos' %>
+REST=<%= @config[:rest] %>
+SYNCDELAY="--syncdelay <%= @config[:syncdelay] %>"
 <% end %>
 
 # Include mongodb defaults if available
