@@ -69,7 +69,7 @@ class Chef
 
         case node[:platform]
         when "ubuntu"
-          if node[:platform_version].to_f >= 9.10
+          if node[:platform_version].to_f >= 9.10 && config[:system_init] == "upstart"
             provider Chef::Provider::Service::Upstart
           end
         end
