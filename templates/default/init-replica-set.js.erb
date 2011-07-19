@@ -1,9 +1,9 @@
 rs.initiate({
-  _id: "<%= node[:mongodb][:replica_set] %>",
+  _id: "<%= node[:mongodb][:server][:replica_set] %>",
   members: [
     {
-      _id: <%= node[:mongodb][:replica_member_id] %>,
-      host: "localhost:<%= node[:mongodb][:port] %>"
+      _id: <%= node[:mongodb][:server][:replica_member_id] %>,
+      host: "localhost:<%= node[:mongodb][:server][:port] %>"
     }
   ]
 });
@@ -11,8 +11,9 @@ rs.initiate({
 <% @members.each do |member| %>
   <% next if node.fqdn == member.fqdn %>
   rs.add({
-    _id: <%= member[:mongodb][:replica_member_id] %>,
-    host: "localhost:<%= member[:mongodb][:port] %>",
-    priority: <%= member[:mongodb][:replica_priority] %>
+    _id: <%= member[:mongodb][:server][:replica_member_id] %>,
+    host: "localhost:<%= member[:mongodb][:server][:port] %>",
+    priority: <%= member[:mongodb][:server][:replica_priority] %>
   });
 <% end %>
+

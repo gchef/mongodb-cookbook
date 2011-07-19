@@ -21,11 +21,13 @@
 # This sets up replication using ssh tunnels
 #
 
+#node[:mongodb][:server]
+
 include_recipe 'openssh::default'
 
-node[:mongodb][:replication] = true
+node[:mongodb][:server][:replication] = true
 
-members = search(:node, "mongodb_replica_set:#{node[:mongodb][:replica_set]}")
+members = search(:node, "mongodb_replica_set:#{node[:mongodb][:server][:replSet]}")
 
 # create tunnels to other members of the set
 
@@ -34,14 +36,14 @@ members.each do |member|
   Chef::Log.info "MongoDB replica member: #{member.name}"
   openssh_tunnel "MongoDB_replica_member_#{member.name.gsub(/\./,'_')}" do
     host member.name
-    forwarding "-L#{member[:mongodb][:port]}:localhost:#{member[:mongodb][:port]}"
+    forwarding "-L#{member[:mongodb][:server][:port]}:localhost:#{member[:mongodb][:server][:port]}"
     key '/root/.ssh/tunnel_id_rsa'
     user 'tunnel'
   end
 end
 
 # initialize the set if i am the replica-initializer :)
-if node[:mongodb][:replica_initializer]
+if node[:mongodb][:server][:replica_initializer]
   template '/etc/mongodb-replica.js' do
     source 'init-replica-set.js.erb'
     variables :members => members
@@ -53,3 +55,4 @@ if node[:mongodb][:replica_initializer]
     action :nothing
   end
 end
+
