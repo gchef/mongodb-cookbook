@@ -144,7 +144,7 @@ running() {
 
 start_server() {
 # Start the process using the wrapper
-  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --make-pidfile --chuid $DAEMONUSER --exec $DAEMON -- $REST $REPLSET $SHARDSVR $CONFIGSVR $SYNCDELAY $CONFIGDB --config $CONF
+  start-stop-daemon --background --start --quiet --pidfile $PIDFILE --chuid $DAEMONUSER --exec $DAEMON -- $REST $REPLSET $SHARDSVR $CONFIGSVR $SYNCDELAY $CONFIGDB --config $CONF
   errcode=$?
   return $errcode
 }
