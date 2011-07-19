@@ -91,9 +91,9 @@ default[:mongodb][:server][:keyFile]               = ""
 #buildIndexes
 #slaveDelay
 
-# mikezter - default[:mongodb][:replica_member_id] = 1
-# mikezter - default[:mongodb][:replica_priority] = 1 # set to 0 if the node should never become master
-# mikezter - default[:mongodb][:replica_initializer] = false # true if the node should initialize the set
+# mikezter - default[:mongodb][:server][:replica_member_id] = 1
+# mikezter - default[:mongodb][:server][:replica_priority] = 1 # set to 0 if the node should never become master
+# mikezter - default[:mongodb][:server][:replica_initializer] = false # true if the node should initialize the set
 
 ### BACKUP
 default[:mongodb][:server][:backup][:backupdir]    = "/var/backups/mongodb"
