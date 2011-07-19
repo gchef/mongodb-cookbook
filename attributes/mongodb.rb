@@ -19,62 +19,73 @@ end
 ### MAIN SERVER
 
 ### GENERAL
-default[:mongodb][:server][:bind_ip]               = bind_ip # default[:mongodb][:bind_ip] = '127.0.0.1'
+default[:mongodb][:server][:bind_ip]               = bind_ip
 default[:mongodb][:server][:config]                = "/etc/mongodb.conf"
-default[:mongodb][:server][:dbpath]                = "/var/lib/mongodb" # default[:mongodb][:datadir] = "/var/db/mongodb"
+default[:mongodb][:server][:dbpath]                = "/var/lib/mongodb" # "/var/db/mongodb"
 default[:mongodb][:server][:dir]                   = "/opt/mongodb-#{mongodb[:version]}"
 default[:mongodb][:server][:logpath]               = "/var/log/mongodb.log"
-default[:mongodb][:server][:pidfile]               = "/var/lib/mongodb/mongod.lock" # default[:mongodb][:pidfile] = "/var/run/mongodb.pid"
+default[:mongodb][:server][:logappend]             = true
+default[:mongodb][:server][:pidfile]               = "/var/lib/mongodb/mongod.lock" # "/var/run/mongodb.pid"
 default[:mongodb][:server][:port]                  = 27017
-default[:mongodb][:server][:system_init]           = "sysv" # from papercavalier
+default[:mongodb][:server][:system_init]           = "sysv"
 
 ### EXTRA
-default[:mongodb][:server][:auth]                  = false
-default[:mongodb][:server][:username]              = ""
-default[:mongodb][:server][:password]              = ""
-default[:mongodb][:server][:cpu]                   = false # mikezter - default[:mongodb][:log_cpu_io]
-default[:mongodb][:server][:diaglog]               = false
-default[:mongodb][:server][:logappend]             = true  # from papercavalier
-default[:mongodb][:server][:nocursors]             = false
-default[:mongodb][:server][:nohints]               = false
-default[:mongodb][:server][:nohttpinterface]       = false # mikezter - default[:mongodb][:nohttp]
+# Administration & Monitoring
+default[:mongodb][:server][:nohttpinterface]       = false
+default[:mongodb][:server][:rest]                  = false
 default[:mongodb][:server][:noscripting]           = false
 default[:mongodb][:server][:notablescan]           = false
 default[:mongodb][:server][:noprealloc]            = false
 default[:mongodb][:server][:nssize]                = false
-default[:mongodb][:server][:objcheck]              = false
 default[:mongodb][:server][:quota]                 = false
+default[:mongodb][:server][:quotaFiles]            = ""
+# Logging
+default[:mongodb][:server][:cpu]                   = false
 default[:mongodb][:server][:verbose]               = false
+# Security
+default[:mongodb][:server][:auth]                  = false
+default[:mongodb][:server][:username]              = ""
+default[:mongodb][:server][:password]              = ""
+# Sharding
+default[:mongodb][:server][:shardsvr]              = false # default[:mongodb][:server][:shard_server]
+# Journaling
 default[:mongodb][:server][:journal]               = false
-# slowms
-
-### STARTUP
-default[:mongodb][:server][:rest]                  = false
+# Additional Configuration Options
+default[:mongodb][:server][:directoryperdb]        = false
+default[:mongodb][:server][:quiet]                 = false
+default[:mongodb][:server][:repairpath]            = ""
+default[:mongodb][:server][:objcheck]              = false
 default[:mongodb][:server][:syncdelay]             = 60
+default[:mongodb][:server][:diaglog]               = false
+default[:mongodb][:server][:nocursors]             = false
+default[:mongodb][:server][:nohints]               = false
+default[:mongodb][:server][:smallfiles]            = false
+default[:mongodb][:server][:nounixsocket]          = false
 
 ### MMS
 default[:mongodb][:server][:mms]                   = false
-default[:mongodb][:server][:mms_interval]         = "" # mikezter - default[:mongodb][:token]
-default[:mongodb][:server][:mms_name]             = "" # mikezter - default[:mongodb][:name]
-default[:mongodb][:server][:mms_token]            = "" # mikezter - default[:mongodb][:interval]
+default[:mongodb][:server][:mms_interval]         = ""
+default[:mongodb][:server][:mms_name]             = ""
+default[:mongodb][:server][:mms_token]            = ""
 
 ### MASTER/SLAVE
-default[:mongodb][:server][:master]                = false # from papercavalier
-default[:mongodb][:server][:slave]                 = false # from papercavalier
-default[:mongodb][:server][:slave_source]          = "" # from papercavalier
-default[:mongodb][:server][:slave_only]            = "" # from papercavalier
+default[:mongodb][:server][:master]                = false
+default[:mongodb][:server][:slave]                 = false
+default[:mongodb][:server][:slave_source]          = ""
+default[:mongodb][:server][:slave_only]            = ""
 
 ### MASTER/SLAVE & REPLICATION
 default[:mongodb][:server][:replication]           = false
-default[:mongodb][:server][:arbiter]               = ""
-default[:mongodb][:server][:oplogsize]             = 0
 default[:mongodb][:server][:autoresync]            = false
-
-### REPLICATION
-default[:mongodb][:server][:replSet]               = "" # mikezter - default[:mongodb][:replica_set]   = "none"
 default[:mongodb][:server][:fastsync]              = false
 default[:mongodb][:server][:opidmem]               = 0
-#keyfile
+default[:mongodb][:server][:oplogsize]             = 0
+default[:mongodb][:server][:arbiter]               = ""
+
+### REPLICATION
+default[:mongodb][:server][:replSet]               = ""
+default[:mongodb][:server][:keyFile]               = ""
+
 #votes
 #hidden
 #buildIndexes
@@ -83,9 +94,6 @@ default[:mongodb][:server][:opidmem]               = 0
 # mikezter - default[:mongodb][:replica_member_id] = 1
 # mikezter - default[:mongodb][:replica_priority] = 1 # set to 0 if the node should never become master
 # mikezter - default[:mongodb][:replica_initializer] = false # true if the node should initialize the set
-
-### SHARDING
-default[:mongodb][:server][:shard_server]          = false
 
 ### BACKUP
 default[:mongodb][:server][:backup][:backupdir]    = "/var/backups/mongodb"
@@ -100,23 +108,22 @@ default[:mongodb][:server][:backup][:maxemailsize] = 4000
 
 ##########################################################################
 ### CONFIG SERVER
-# mikezter - default[:mongodb][:config_server][:host]        = "localhost"
-default[:mongodb][:config_server][:bind_ip] = bind_ip # from papercavalier
+default[:mongodb][:config_server][:bind_ip] = bind_ip
 default[:mongodb][:config_server][:config]  = "/etc/mongodb-config.conf"
 default[:mongodb][:config_server][:datadir] = "/var/db/mongodb-config"
 default[:mongodb][:config_server][:logpath] = "/var/log/mongodb-config.log"
 default[:mongodb][:config_server][:pidfile] = "/var/run/mongodb-config.pid"
 default[:mongodb][:config_server][:port]    = 27019
-default[:mongodb][:config_server][:verbose] = false # from papercavalier
+default[:mongodb][:config_server][:verbose] = false
 
 ##########################################################################
 ### MONGOS - SHARDING ROUTER
-default[:mongodb][:mongos][:bind_ip] = bind_ip # mikezter - default[:mongodb][:mongos][:host]        = "localhost"
+default[:mongodb][:mongos][:bind_ip] = bind_ip
 default[:mongodb][:mongos][:config]  = "/etc/mongos.conf"
-default[:mongodb][:mongos][:logpath] = "/var/log/mongos.log" # mikezter - default[:mongodb][:mongos][:logfile]     = "/var/log/mongos.log"
+default[:mongodb][:mongos][:logpath] = "/var/log/mongos.log"
 default[:mongodb][:mongos][:pidfile] = "/var/run/mongos.pid"
 default[:mongodb][:mongos][:port]    = 27017
-default[:mongodb][:mongos][:verbose] = false # from papercavalier
+default[:mongodb][:mongos][:verbose] = false
 
 ##########################################################################
 ### Monit
