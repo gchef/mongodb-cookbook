@@ -71,8 +71,8 @@ default[:mongodb][:server][:mms_token]            = ""
 ### MASTER/SLAVE
 default[:mongodb][:server][:master]                = false
 default[:mongodb][:server][:slave]                 = false
-default[:mongodb][:server][:slave_source]          = ""
-default[:mongodb][:server][:slave_only]            = ""
+default[:mongodb][:server][:slave_source]          = "" # <server:port>
+default[:mongodb][:server][:slave_only]            = "" # <db>
 
 ### MASTER/SLAVE & REPLICATION
 default[:mongodb][:server][:replication]           = false
@@ -80,20 +80,21 @@ default[:mongodb][:server][:autoresync]            = false
 default[:mongodb][:server][:fastsync]              = false
 default[:mongodb][:server][:opidmem]               = 0
 default[:mongodb][:server][:oplogsize]             = 0
-default[:mongodb][:server][:arbiter]               = ""
+default[:mongodb][:server][:arbiter]               = "" # <server:port>
 
 ### REPLICATION
 default[:mongodb][:server][:replSet]               = ""
+default[:mongodb][:server][:replica_member_id]     = 0
+default[:mongodb][:server][:replica_initializer]   = false # set to true if the node should initialize the set
 default[:mongodb][:server][:keyFile]               = ""
-
-#votes
-#hidden
-#buildIndexes
-#slaveDelay
-
-# mikezter - default[:mongodb][:server][:replica_member_id] = 1
-# mikezter - default[:mongodb][:server][:replica_priority] = 1 # set to 0 if the node should never become master
-# mikezter - default[:mongodb][:server][:replica_initializer] = false # true if the node should initialize the set
+# Optional Replica Set Config Options
+default[:mongodb][:server][:arbiter_only]          = false
+default[:mongodb][:server][:build_indexes]         = true
+default[:mongodb][:server][:hidden]                = false
+default[:mongodb][:server][:priority]              = 1 # set to 0 if the node should never become master - v1.8 - only 1 or 0, v2.0 - can be specific priorty number
+#default[:mongodb][:server][:tags]                  = [] # v2.0
+default[:mongodb][:server][:slave_delay]           = 0
+default[:mongodb][:server][:votes]                 = 1
 
 ### BACKUP
 default[:mongodb][:server][:backup][:backupdir]    = "/var/backups/mongodb"

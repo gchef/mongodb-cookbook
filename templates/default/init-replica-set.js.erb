@@ -2,8 +2,14 @@ rs.initiate({
   _id: "<%= node[:mongodb][:server][:replica_set] %>",
   members: [
     {
-      _id: <%= node[:mongodb][:server][:replica_member_id] %>,
-      host: "localhost:<%= node[:mongodb][:server][:port] %>"
+_id: <%= node[:mongodb][:server][:replica_member_id] %>,
+host: "localhost:<%= node[:mongodb][:server][:port] %>"
+<%= ", arbiterOnly: true" if node[:mongodb][:server][:arbiter_only] %>
+<%= ", buildIndexes: false" unless node[:mongodb][:server][:buildIndexes] %>
+<%= ", hidden: true" if node[:mongodb][:server][:hidden] %>
+<%= ", priority: #{node[:mongodb][:server][:priority]}" unless node[:mongodb][:server][:priority] == 1 %>
+<%= ", slaveDelay: #{node[:mongodb][:server][:slave_delay]}" unless node[:mongodb][:server][:slave_delay] == 0 %>
+<%= ", votes: #{node[:mongodb][:server][:votes]}" unless node[:mongodb][:server][:votes] == 1 %>
     }
   ]
 });
@@ -11,9 +17,14 @@ rs.initiate({
 <% @members.each do |member| %>
   <% next if node.fqdn == member.fqdn %>
   rs.add({
-    _id: <%= member[:mongodb][:server][:replica_member_id] %>,
-    host: "localhost:<%= member[:mongodb][:server][:port] %>",
-    priority: <%= member[:mongodb][:server][:replica_priority] %>
+_id: <%= member[:mongodb][:server][:replica_member_id] %>,
+host: "localhost:<%= member[:mongodb][:server][:port] %>"
+<%= ", arbiterOnly: true" if member[:mongodb][:server][:arbiter_only] %>
+<%= ", buildIndexes: false" unless member[:mongodb][:server][:buildIndexes] %>
+<%= ", hidden: true" if member[:mongodb][:server][:hidden] %>
+<%= ", priority: #{default[:mongodb][:server][:priority]}" unless member[:mongodb][:server][:priority] == 1 %>
+<%= ", slaveDelay: #{default[:mongodb][:server][:slave_delay]}" unless member[:mongodb][:server][:slave_delay] == 0 %>
+<%= ", votes: #{default[:mongodb][:server][:votes]}" unless member[:mongodb][:server][:votes] == 1 %>
   });
 <% end %>
 
