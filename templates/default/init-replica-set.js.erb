@@ -19,7 +19,7 @@ votes: #{node[:mongodb][:server][:votes]}" unless node[:mongodb][:server][:votes
   <% next if node.fqdn == member.fqdn %>
   rs.add({
 _id: <%= member[:mongodb][:server][:replica_member_id] %>,
-host: "<%= node[:rackspace][:private_ip] %>:<%= member[:mongodb][:server][:port] %>"<%= ",
+host: "<%= member[:rackspace][:private_ip] %>:<%= member[:mongodb][:server][:port] %>"<%= ",
 arbiterOnly: true" if member[:mongodb][:server][:arbiter_only] -%><%= ",
 buildIndexes: false" unless member[:mongodb][:server][:build_indexes] -%><%= ",
 hidden: true" if member[:mongodb][:server][:hidden] -%><%= ",
