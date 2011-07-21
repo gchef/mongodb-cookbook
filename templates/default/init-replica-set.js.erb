@@ -15,8 +15,7 @@ votes: #{node[:mongodb][:server][:votes]}" unless node[:mongodb][:server][:votes
   ]
 });
 
-<% members = search(:node, "mongodb_replica_set:#{node[:mongodb][:server][:replSet]}") %>
-<% members.each do |member| %>
+<% @members.each do |member| %>
   <% next if node.fqdn == member.fqdn %>
   rs.add({
 _id: <%= member[:mongodb][:server][:replica_member_id] %>,

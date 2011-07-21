@@ -27,7 +27,7 @@ include_recipe 'openssh::default'
 
 node[:mongodb][:server][:replication] = true
 
-members = search(:node, "mongodb_replica_set:#{node[:mongodb][:server][:replSet]}")
+members = search(:node, "mongodb_server_replSet:#{node[:mongodb][:server][:replSet]}")
 
 # create tunnels to other members of the set
 
