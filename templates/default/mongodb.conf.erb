@@ -108,7 +108,7 @@ opIdMem = <%= config[:opidmem] * 1024 * 1024 %>
 # Custom size for replication operation log in MB
 oplogSize = <%= config[:oplogsize] %>
 <% end %>
-<% if config[:arbiter] %>
+<% if config[:arbiter] && !config[:keyFile].to_s.empty?  %>
 # Address of arbiter server
 arbiter = <%= config[:arbiter] %>
 <% end %>
@@ -132,11 +132,11 @@ master = true
 
 # Replica Sets
 
-<% if config[:replSet] %>
+<% if config[:replSet] && !config[:replSet].to_s.empty?  %>
 # Use replica sets with the specified logical set name.  Typically the optional seed host list need not be specified
 replSet = <%= config[:replSet] %>
 <% end %>
-<% if config[:keyFile] %>
+<% if config[:keyFile] && !config[:keyFile].to_s.empty? %>
 # Private key for cluster authentication
 keyFile = <%= config[:keyFile] %>
 <% end %>
