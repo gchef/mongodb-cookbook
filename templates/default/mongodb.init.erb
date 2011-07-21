@@ -68,7 +68,7 @@ CONFIGSVR=--configsvr
 CONFIGDB="--configdb <%= @configdb_server_list %>"
 <% else %>
 REPLSET=<%= @config[:replSet] %>
-SHARDSVR=<%= @config[:shard_server] %>
+SHARDSVR=<%= @config[:shardsvr] %>
 <% end %>
 
 <% unless @server_type == 'mongos' %>
