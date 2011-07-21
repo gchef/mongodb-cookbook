@@ -3,7 +3,7 @@ rs.initiate({
   members: [
     {
 _id: <%= node[:mongodb][:server][:replica_member_id] %>,
-host: "localhost:<%= node[:mongodb][:server][:port] %>"<%= ",
+host: "<%= node[:rackspace][:private_ip] %>:<%= node[:mongodb][:server][:port] %>"<%= ",
 arbiterOnly: true" if node[:mongodb][:server][:arbiter_only] -%><%= ",
 buildIndexes: false" unless node[:mongodb][:server][:build_indexes] -%><%= ",
 hidden: true" if node[:mongodb][:server][:hidden] -%><%= ",
@@ -19,7 +19,7 @@ votes: #{node[:mongodb][:server][:votes]}" unless node[:mongodb][:server][:votes
   <% next if node.fqdn == member.fqdn %>
   rs.add({
 _id: <%= member[:mongodb][:server][:replica_member_id] %>,
-host: "localhost:<%= member[:mongodb][:server][:port] %>"<%= ",
+host: "<%= node[:rackspace][:private_ip] %>:<%= member[:mongodb][:server][:port] %>"<%= ",
 arbiterOnly: true" if member[:mongodb][:server][:arbiter_only] -%><%= ",
 buildIndexes: false" unless member[:mongodb][:server][:build_indexes] -%><%= ",
 hidden: true" if member[:mongodb][:server][:hidden] -%><%= ",

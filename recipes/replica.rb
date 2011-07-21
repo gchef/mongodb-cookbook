@@ -31,16 +31,16 @@ members = search(:node, "mongodb_server_replSet:#{node[:mongodb][:server][:replS
 
 # create tunnels to other members of the set
 
-members.each do |member|
-  next if member.name == node.name # skip myself
-  Chef::Log.info "MongoDB replica member: #{member.name}"
-  openssh_tunnel "MongoDB_replica_member_#{member.name.gsub(/\./,'_')}" do
-    host member.name
-    forwarding "-L#{member[:mongodb][:server][:port]}:localhost:#{member[:mongodb][:server][:port]}"
-    key '/root/.ssh/tunnel_id_rsa'
-    user 'tunnel'
-  end
-end
+#members.each do |member|
+#  next if member.name == node.name # skip myself
+#  Chef::Log.info "MongoDB replica member: #{member.name}"
+#  openssh_tunnel "MongoDB_replica_member_#{member.name.gsub(/\./,'_')}" do
+#    host member.name
+#    forwarding "-L#{member[:mongodb][:server][:port]}:localhost:#{member[:mongodb][:server][:port]}"
+#    key '/root/.ssh/tunnel_id_rsa'
+#    user 'tunnel'
+#  end
+#end
 
 # initialize the set if i am the replica-initializer :)
 if node[:mongodb][:server][:replica_initializer]
