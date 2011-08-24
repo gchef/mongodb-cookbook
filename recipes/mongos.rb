@@ -2,9 +2,8 @@
 # Cookbook Name:: mongodb
 # Recipe:: mongos
 #
-# Author:: Gerhard Lazu (<gerhard.lazu@papercavalier.com>)
-#
-# Copyright 2010, Paper Cavalier, LLC
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
+# Copyright 2010-2011, Gerhard Lazu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

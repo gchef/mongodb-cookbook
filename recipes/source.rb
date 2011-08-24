@@ -1,10 +1,9 @@
 #
 # Cookbook Name:: mongodb
-# Recipe:: source
+# Recipe:: default
 #
-# Author:: Gerhard Lazu (<gerhard.lazu@papercavalier.com>)
-#
-# Copyright 2010, Paper Cavalier, LLC
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
+# Copyright 2010-2011, Gerhard Lazu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,12 +58,4 @@ unless environment.include? node[:mongodb][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:mongodb][:dir]}/bin:") }
 end
 
-# from mikezter
-template "/etc/init.d/mongodb" do
-  source "mongodb.init.erb"
-  mode "0755"
-  backup false
-end
-
 node[:mongodb][:installed_from] = "src"
-

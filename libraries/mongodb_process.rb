@@ -5,7 +5,7 @@ class Chef
       config = node[:mongodb][name.to_sym]
 
       include_recipe "logrotate"
-      #require_recipe "monit::default" unless config[:system_init] == "upstart"
+      require_recipe "monit::default" unless config[:system_init] == "upstart"
 
       if config[:dbpath]
         directory config[:dbpath] do

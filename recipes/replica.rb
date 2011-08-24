@@ -1,9 +1,11 @@
 #
 # Cookbook Name:: mongodb
-# Recipe:: apt
+# Recipe:: replica
+#
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
+# Copyright 2010-2011, Gerhard Lazu
 #
 # Author:: Michael Strüder (<mikezter@ryoukai.org>)
-#
 # Copyright 2011, Active Prospect, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +19,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-# This sets up replication using ssh tunnels
-#
 
 #node[:mongodb][:server]
 

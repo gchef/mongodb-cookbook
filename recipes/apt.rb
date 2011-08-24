@@ -2,9 +2,8 @@
 # Cookbook Name:: mongodb
 # Recipe:: apt
 #
-# Author:: Michael Shapiro (<koudelka@ryoukai.org>)
-#
-# Copyright 2011, Active Prospect, Inc.
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
+# Copyright 2010-2011, Gerhard Lazu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,34 +18,16 @@
 # limitations under the License.
 #
 
-execute "apt-get update" do
-  action :nothing
-end
-
-execute "add 10gen apt key" do
-  command "apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10"
-  action :nothing
-end
-
-template "/etc/apt/sources.list.d/mongodb.list" do
-  owner "root"
-  mode "0644"
-  source "mongodb.list.erb"
-  notifies :run, resources(:execute => "add 10gen apt key"), :immediately
-  notifies :run, resources(:execute => "apt-get update"), :immediately
+apt_repository "10gen" do
+  uri "http://downloads-distro.mongodb.org/repo/"+(node[:mongodb][:system_init] == "upstart" ? "ubuntu-upstart" : "debian-sysvinit")
+  distribution "dist"
+  components ["10gen"]
+  keyserver "keyserver.ubuntu.com"
+  key "7F0CEB10"
+  action :add
 end
 
 package "mongodb-10gen"
 
-if File.exists?("/etc/init.d/mongodb") # blow away the package-provided scripts because we're going to install our own via template
-  service "mongodb" do
-    action [ :stop, :disable ]
-  end
-
-  file "/etc/init.d/mongodb" do
-    action :delete
-  end
-end
-
-node[:mongodb][:installed_from] = "apt"
-
+# Stop mongodb
+# Replace /etc/init/mongodb.conf with cookbook one
