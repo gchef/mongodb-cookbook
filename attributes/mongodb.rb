@@ -1,15 +1,6 @@
-# we'll be re-using this across all server type configs
-if node[:network][:interfaces][:eth0]
-  bind_ip << node[:network][:interfaces][:eth0][:addresses].select do |address, values|
-    values['family'] == 'inet'
-  end.first.first
-else
-  bind_ip = [ "127.0.0.1" ]
-end
-
 default[:mongodb][:sever_type] = "mongod"
 
-default[:mongodb][:bind_ip]               = bind_ip
+default[:mongodb][:bind_ip]               = "127.0.0.1"
 default[:mongodb][:config]                = "/etc/mongodb.conf"
 default[:mongodb][:dbpath]                = "/var/lib/mongodb"
 default[:mongodb][:logpath]               = "/var/log/mongodb"
