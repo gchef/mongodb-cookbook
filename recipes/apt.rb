@@ -19,7 +19,7 @@
 #
 
 apt_repository "10gen" do
-  uri "http://downloads-distro.mongodb.org/repo/"+(node[:mongodb][:system_init] == "upstart" ? "ubuntu-upstart" : "debian-sysvinit")
+  uri "http://downloads-distro.mongodb.org/repo/ubuntu-upstart"
   distribution "dist"
   components ["10gen"]
   keyserver "keyserver.ubuntu.com"
@@ -29,5 +29,31 @@ end
 
 package "mongodb-10gen"
 
-# Stop mongodb
-# Replace /etc/init/mongodb.conf with cookbook one
+service "mongodb" do
+  supports :start => true, :stop => true, :restart => true
+  action [ :enable, :stop ]
+end
+
+directory node[:mongodb][:dbpath] do
+  owner "mongodb"
+  group "mongodb"
+  mode "0775"
+end
+
+template "/etc/init/mongodb.conf" do
+  source "mongodb.upstart.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  backup false
+  notifies :restart, :service => "mongodb"
+end
+
+template "/etc/mongodb.conf" do
+  source "mongodb.conf.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  backup false
+  notifies :restart, :service => "mongodb"
+end
