@@ -38,6 +38,7 @@ directory node[:mongodb][:dbpath] do
   owner "mongodb"
   group "mongodb"
   mode "0775"
+  recursive true
 end
 
 template "/etc/init/mongodb.conf" do
