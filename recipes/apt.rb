@@ -47,7 +47,7 @@ template "/etc/init/mongodb.conf" do
   group "root"
   mode "0644"
   backup false
-  notifies :restart, :service => "mongodb"
+  notifies :restart, resources(:service => "mongodb")
 end
 
 template "/etc/mongodb.conf" do
@@ -56,5 +56,5 @@ template "/etc/mongodb.conf" do
   group "root"
   mode "0644"
   backup false
-  notifies :restart, :service => "mongodb"
+  notifies :restart, resources(:service => "mongodb")
 end
