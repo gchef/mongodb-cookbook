@@ -30,8 +30,9 @@ end
 package "mongodb-10gen"
 
 service "mongodb" do
+  provider Chef::Provider::Service::Upstart
   supports :start => true, :stop => true, :restart => true
-  action [ :enable, :stop ]
+  action [:enable, :start]
 end
 
 directory node[:mongodb][:dbpath] do
