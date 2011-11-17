@@ -1,5 +1,5 @@
 # IP addresses that mongo will listen on
-default[:mongodb][:bind_ips] = ["127.0.0.1"]
+default[:mongodb][:bind_ip] = "127.0.0.1"
 #
 # Port the mongod will listen on
 default[:mongodb][:port] = 27017
