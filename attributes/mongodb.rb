@@ -21,3 +21,12 @@ default[:mongodb][:logpath] = "/var/log/mongodb"
 #
 # Number of open files for the mongodb user
 default[:mongodb][:nofile] = "20000 20000"
+#
+# How often to logrotate:
+# * daily
+# * weekly
+# * monthly
+default[:mongodb][:logrotate][:period] = "daily"
+#
+# How many archived logfiles to keep
+default[:mongodb][:logrotate][:keep] = 7
