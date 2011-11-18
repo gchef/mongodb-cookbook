@@ -19,9 +19,6 @@ default[:mongodb][:dbpath] = "/var/lib/mongodb"
 # Full filename path to where log messages will be written
 default[:mongodb][:logpath] = "/var/log/mongodb"
 #
-# Number of open files for the mongodb user
-default[:mongodb][:nofile] = "20000 20000"
-#
 # How often to logrotate:
 # * daily
 # * weekly

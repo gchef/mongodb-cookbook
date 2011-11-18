@@ -3,8 +3,6 @@
 
 description "MongoDB"
 
-limit nofile <%= node[:mongodb][:nofile] %>
-
 kill timeout <%= node[:mongodb][:timeout] %> # wait this many seconds between SIGTERM and SIGKILL.
 
 pre-start script
