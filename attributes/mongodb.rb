@@ -1,3 +1,6 @@
+# The version that we'll install via apt
+default[:mongodb][:version] = "2.0.2"
+#
 # IP addresses that mongo will listen on
 default[:mongodb][:bind_ip] = "127.0.0.1"
 #

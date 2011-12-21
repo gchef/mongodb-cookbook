@@ -2,7 +2,7 @@ maintainer        "Gerhard Lazu"
 maintainer_email  "gerhard@lazu.co.uk"
 license           "Apache 2.0"
 description       "Installs MongoDB from 10Gen's apt source"
-version           "2.0.1"
+version           "1.1.0"
 
 recipe "mongodb", "Default recipe simply includes the mongodb::apt recipe"
 recipe "mongodb::apt", "Installs MongoDB from 10Gen's apt source and includes init.d script"
