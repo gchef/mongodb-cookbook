@@ -9,6 +9,13 @@ end
 
 package "mongodb-10gen" do
   version "#{node[:mongodb][:version]}*"
+  options '--force-yes -o Dpkg::Options::="--force-confold"'
+  only_if "[ $(dpkg -l mongodb-10gen 2>&1 | grep #{node[:mongodb][:version]}.* | grep -c '^h[ic] ') = 0 ]"
+end
+
+bash "freeze mongodb-10gen" do
+  code "echo mongodb-10gen hold | dpkg --set-selections"
+  only_if "[ $(dpkg --get-selections | grep -c 'mongodb-10gen\W*hold') = 0 ]"
 end
 
 service "mongodb" do
@@ -37,7 +44,7 @@ template "/etc/init/mongodb.conf" do
   group "root"
   mode "0644"
   backup false
-  notifies :restart, resources(:service => "mongodb")
+  notifies :restart, resources(:service => "mongodb"), :delayed
 end
 
 template "/etc/mongodb.conf" do
@@ -45,5 +52,5 @@ template "/etc/mongodb.conf" do
   group "root"
   mode "0644"
   backup false
-  notifies :restart, resources(:service => "mongodb")
+  notifies :restart, resources(:service => "mongodb"), :delayed
 end
